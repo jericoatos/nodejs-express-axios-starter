@@ -7,3 +7,13 @@
 
 ## Backend
 1. Follow the steps to run the backend for this application <a href="https://github.com/shaunganley/java-dropwizard-flyway-starter" target="_blank">here</a>
+
+## How to Lint
+
+1. Run command 'npm install' in the terminal
+2. Run command 'npm run linter' in the terminal
+
+## How to Test
+
+1. Run command 'npm test'
+
