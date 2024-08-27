@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Open Job Roles</title>
+    </head>
+    <body>
+        <h1>Job Roles</h1>
+        <table>
+            <tr>
+                <th>Role Name</th>
+                <th>Location</th>
+                <th>Closing Date</th>
+                <th>Capability Name</th>
+                <th>Band Name</th>
+            </tr>
+            {% for jobRole in jobRole %}
+            <tr>
+                <td>{{ jobRole.roleName }}</td>
+                <td>{{ jobRole.location }}</td>
+                <td>{{ jobRole.closingDate | date }}</td>                
+                <td>{{ jobRole.capabilityName }}</td>
+                <td>{{ jobRole.bandName }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
