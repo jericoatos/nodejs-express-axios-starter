@@ -3,7 +3,7 @@ import session from "express-session";
 import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import { getLoginForm, logout, postLoginForm } from "./controllers/AuthController";
-import { setLoggedInStatus } from "./middleware/Authmiddleware";
+import { setLoggedInStatus } from "./middleware/AuthMiddleware";
 
 const app = express();
 
