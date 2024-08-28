@@ -1,6 +1,12 @@
 import express from "express"; 
-import { getJobRoles } from "../services/JobRoleService";
+import * as JobRoleService from "../services/JobRoleService";
 
 export const getAllJobRoles = async (req: express.Request, res: express.Response): Promise<void> => {
-    res.render('job-role-list.html', {jobRole: await getJobRoles()});
+    try {
+        const jobRoles = await JobRoleService.getJobRoles();
+        res.render('job-role-list', { jobRoles });
+    } catch (e) {
+        res.locals.errorMessage = e.message;
+        res.render('job-role-list');
+    }
 }
