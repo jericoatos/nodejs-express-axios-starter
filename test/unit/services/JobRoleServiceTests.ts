@@ -33,6 +33,7 @@ describe('JobRoleService', function () {
             expect(results[0].closingDate).to.deep.equal(expectedDate);
 
         })
+
         it('should throw exception when 500 error returned from axios', async () => {
             mock.onGet(URL).reply(500);
     
@@ -44,6 +45,4 @@ describe('JobRoleService', function () {
             }
           })
     })
-
-
 })

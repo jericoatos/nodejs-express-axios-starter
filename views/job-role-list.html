@@ -12,23 +12,25 @@
             <br>
             <br>
             <h1>Job Roles</h1>
-            <table>
+            <table class="table table-striped">
                 <tr>
-                    <th>Role Name</th>
-                    <th>Location</th>
-                    <th>Closing Date</th>
-                    <th>Capability Name</th>
-                    <th>Band Name</th>
+                    <th scope="col">Role Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Closing Date</th>
+                    <th scope="col">Capability Name</th>
+                    <th scope="col">Band Name</th>
                 </tr>
                 {% for jobRole in jobRole %}
+                <tbody>
                 <tr>
                     <td>{{ jobRole.roleName }}</td>
                     <td>{{ jobRole.location }}</td>
-                    <td>{{ jobRole.closingDate | date }}</td>                
+                    <td>{{ jobRole.closingDate | date }}</td>           
                     <td>{{ jobRole.capabilityName }}</td>
                     <td>{{ jobRole.bandName }}</td>
                 </tr>
                 {% endfor %}
+            </tbody>
             </table>
             <br>
             <br>
