@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kainos Academy</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../public/assets/style/styles.css">
+    <link rel="icon" type="image/x-icon" href="https://companieslogo.com/img/orig/KNOS.L-8a0d29cc.png?t=1720244492">
+</head>
+<body>
+
+    {% include "header.html" %}
+
+       <!-- Header with 0Kainos Logo -->
+       <header>
+        <div class="container d-flex align-items-center">
+            <img src="../public/assets/images/kainoslogo.webp" alt="Kainos logo" class="logo">
+            <nav class="ml-auto">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.kainos.com/digital-services">Digital Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.kainos.com/workday">Workday</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.kainos.com/industries">Industries</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#insights">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://careers.kainos.com/gb/en">Careers</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+        <main class="container mt-4">
+            <section id="kainos">
+                <h2>Welcome to Kainos</h2>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Why should you work at Kainos?</h5>
+                                <p class="card-text">Kainos is an innovative IT company that offers a unique blend of career
+                                    growth, challenging projects, and a supportive work environment.
+                                    By joining Kainos, you'll be part of a team that values creativity, collaboration, and
+                                    cutting-edge technology, ensuring your skills stay relevant in an ever-evolving
+                                    industry.</p>
+                                <p class="card-text">At Kainos, you'll have the opportunity to work on impactful projects
+                                    that drive digital transformation for clients across various sectors. The company
+                                    prioritizes professional development through continuous learning, mentorship programs,
+                                    and hands-on experience with the latest tools and technologies. With a commitment to
+                                    work-life balance, a strong sense of community, and numerous opportunities for personal
+                                    growth, Kainos provides an ideal environment for ambitious individuals looking to make a
+                                    difference in their careers and the world.</p>
+     
+                            </div>
+                            <video autoplay muted loop class="card-img-top">
+                                <source src="/assets/videos/Kainos_ Our people write our story.mp4" type="video/mp4"
+                                    id="kainosvideo">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <img class="card-img-top" src="../public/assets/images/kainospeople.jpeg" alt="Kainos Picture">
+                            <div class="card-body">
+                                <h5 class="card-title">Discover Your Potential at Kainos</h5>
+                                <p>At Kainos, your career will be shaped by innovation, growth, and the opportunity to make
+                                    a significant impact. We pride ourselves on delivering top-tier digital solutions that
+                                    transform industries and improve lives. Joining our team means you'll work on
+                                    cutting-edge projects that challenge your skills and expand your knowledge, making a
+                                    real-world difference in sectors like healthcare, finance, and government.</p>
+                                <p>We believe in nurturing talent, which is why we offer robust training programs,
+                                    mentorship, and access to the latest technologies. Our collaborative and inclusive work
+                                    environment ensures that all voices are heard and valued, fostering creativity and
+                                    teamwork. With a strong emphasis on work-life balance, diversity, and career
+                                    progression, Kainos is the ideal place to grow your career while contributing to
+                                    meaningful, impactful projects.</p>
+     
+                            </div>
+                        </div>
+                    </div>
+                    </ul>
+            </section>
+     
+            <section id="job-descriptions" class="mt-5">
+                <h2>Job Descriptions</h2>
+                <p>Find out more about each job!</p>
+                <div class="list-group">
+                    <a href="https://careers.kainos.com/gb/en/job/JR_14358/Lead-Data-Engineer" target="_blank"
+                        rel="noopener noreferrer" class="list-group-item list-group-item-action">Lead Data Engineer</a>
+                    <a href="https://careers.kainos.com/gb/en/job/JR_14422/Lead-Software-Engineer-Dynamics-365"
+                        target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action">Lead
+                        Software Engineer</a>
+                    <a href="https://careers.kainos.com/gb/en/job/JR_14214/Sales-Engineer" target="_blank"
+                        rel="noopener noreferrer" class="list-group-item list-group-item-action">Sales Engineer</a>
+                        
+                </div>
+            </section>
+            <br>
+            <br>
+        </main>
+
+        {% include "footer.html" %}
+    <!-- Footer with Contact Information -->
+    <footer class="text-light py-4">
+        <img src="../public/assets/images/kainoslogofooter.png" alt="Kainos logo" class="logo">
+        <div class="footer-content">
+            <div>
+                <p class="mb-3">Contact us:</p>
+                <div class="d-flex justify-content-center mb-4">
+                    <a href="https://x.com/i/flow/login?redirect_after_login=%2FKainosSoftware" target="_blank" rel="noopener noreferrer" class="mx-2" aria-label="Instagram">
+                        <img src="../public/assets/images/instagramlogo.png" alt="Instagram Logo" width="50" height="50">
+                    </a>
+                    <a href="https://www.facebook.com/KainosSoftware/?locale=en_GB" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <img src="../public/assets/images/facebooklogo.png" alt="Facebook Logo" width="50" height="50">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <p class="mb-0">&copy; Kainos 2024</p>
+    </footer>
+</body>
+</html>

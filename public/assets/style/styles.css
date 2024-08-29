@@ -1,0 +1,69 @@
+/* Header Styling */
+header {
+    padding: 10px 0;
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    align-items: center;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Styling for Header Logo */
+.logo {
+    max-width: 150px; /* Increase size */
+    height: auto;
+    margin-right: 20px; /* Add space between the logo and nav */
+}
+
+/* Navigation Styling */
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+/* Navigation Link Styling */
+nav .nav-link {
+    color: #222222;
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+nav .nav-link:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Styling for Footer */
+footer {
+    background-color: #262626;
+    color: #ffffff;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space between elements */
+    position: relative;
+}
+
+.footer-content {
+    display: flex;
+    flex: 1;
+    justify-content: center; /* Center the social media icons */
+    align-items: center;
+}
+
+/* Styling for Footer Logo */
+footer img.logo {
+    width: 120px; /* Increase size */
+    height: auto;
+    margin-left: 20px; /* Space from the left */
+}
+
+footer p {
+    margin-bottom: 0;
+}
