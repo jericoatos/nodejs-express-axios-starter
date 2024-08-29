@@ -31,14 +31,12 @@ describe('AuthService', function () {
 
         it('should return JWT token in response data for a valid LoginRequest', async () => {
             const data = RESPONSE_TOKEN;
-            requestMockInstance.onPost(URL, VALID_LOGIN_REQUEST).reply(200, data);
+            requestMockInstance.onPost(URL, VALID_LOGIN_REQUEST).reply(200, RESPONSE_TOKEN);
 
             try {
                 const result = await getAuthToken(VALID_LOGIN_REQUEST);
-                console.log(`Auth token received: ${result}`);  // Debugging line
-                expect(result).to.deep.equal(RESPONSE_TOKEN);
+                expect(result).to.equal(RESPONSE_TOKEN);
             } catch (error) {
-                console.error("Error occurred: ", error); 
                 assert.fail("Expected no error");
             }
         });
