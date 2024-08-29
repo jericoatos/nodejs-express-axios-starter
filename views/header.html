@@ -1,32 +1,9 @@
-<header class="bg-success text-light">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <img src="/assets/images/kainoslogo.webp" alt="Kainos logo">
-                <nav class="navbar navbar-dark">
-                    <ul class="nav">
-                        <a class="navbar-brand" href="#kainos">
-                            <img src="/assets/images/government.png" width="30" height="30"
-                                class="d-inline-block align-top" alt="">
-                            Kainos
-                        </a>
-                        <a class="navbar-brand" href="#job-descriptions">
-                            <img src="/assets/images/application.png" width="30" height="30"
-                                class="d-inline-block align-top" alt="">
-                            Job Descriptions
-                        </a>
-                        <li class="nav-item">
-                            {% if loggedin %}
-                            <button class="btn btn-danger" id="logout-button" onclick="logout()"><b>Log out</b></button>
-                            {% else %}
-                            <a class="btn btn-primary" href="/loginForm"><b>Log In</b></a>
-                            {% endif %}
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
+<header>
+    {% if loggedin %}
+    <button class="btn btn-danger" id="logout-button" onclick="logout()"><b>Log out</b></button>
+    {% else %}
+    <a class="btn btn-primary" href="/loginForm"><b>Log In</b></a>
+    {% endif %}
 </header>
 
 <script>
