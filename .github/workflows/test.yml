@@ -39,8 +39,8 @@ jobs:
         run: npm install
 
       - name: Run Unit Tests
-       env:
-        VALID_TEST_EMAIL: ${{ secrets.VALID_TEST_EMAIL }}
-        VALID_TEST_PASSWORD: ${{ secrets.VALID_TEST_PASSWORD }}
+        env:
+          VALID_TEST_EMAIL: ${{ secrets.VALID_TEST_EMAIL }}
+          VALID_TEST_PASSWORD: ${{ secrets.VALID_TEST_PASSWORD }}
         run: npm test
 
