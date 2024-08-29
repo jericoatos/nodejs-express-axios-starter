@@ -37,13 +37,15 @@ describe('AuthService', function () {
     
             try {
                 const result = await getAuthToken(VALID_LOGIN_REQUEST);
+                console.log('Request payload:', VALID_LOGIN_REQUEST);
+                console.log('Response:', result);
                 expect(result).to.deep.equal(RESPONSE_TOKEN);
             } catch (error) {
-                console.error('Error caught:', error); // Log the error for more insight
+                console.error('Error:', error);
                 assert.fail("Expected no error");
             }
     
-        })
+        });
     
 
         it('should throw error for an invalid LoginRequest without sending POST request', async () => {
@@ -54,6 +56,6 @@ describe('AuthService', function () {
                 expect(error.message).to.equal("Invalid email or password!");
                 return;
             }
-        })
-    })
-})
+        });
+    });
+});
