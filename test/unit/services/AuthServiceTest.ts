@@ -14,9 +14,6 @@ describe('AuthService', function () {
     const VALID_EMAIL = process.env.VALID_TEST_EMAIL;
     const VALID_PASSWORD = process.env.VALID_TEST_PASSWORD;
 
-    console.log(`Valid email: ${VALID_EMAIL}`);  // Debugging line
-    console.log(`Valid password: ${VALID_PASSWORD}`);  // Debugging line
-
     const VALID_LOGIN_REQUEST: LoginRequest = {
         email: String(VALID_EMAIL),
         password: String(VALID_PASSWORD)
@@ -26,7 +23,7 @@ describe('AuthService', function () {
         password: 'invalid'
     };
 
-    const RESPONSE_TOKEN: string = "mock.token.response";
+    const RESPONSE_TOKEN: string = "token";
 
     describe('getAuthToken', function () {
 
@@ -36,6 +33,8 @@ describe('AuthService', function () {
             // Debugging mock setup
             console.log(`Setting up mock response for URL: ${URL}`);
             console.log(`Mocking response with token: ${RESPONSE_TOKEN}`);
+            console.log(`Valid email: ${VALID_EMAIL}`);  // Debugging line
+            console.log(`Valid password: ${VALID_PASSWORD}`);  // Debugging line
 
             // Mock the response
             requestMockInstance.onPost(URL, VALID_LOGIN_REQUEST).reply(200, RESPONSE_TOKEN);
