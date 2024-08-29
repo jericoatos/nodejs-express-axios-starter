@@ -31,6 +31,5 @@ jobs:
         run: npm install
 
       - name: Run Unit Tests
-        run: npx mocha
         run: npm test
 
