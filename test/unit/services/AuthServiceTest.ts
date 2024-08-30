@@ -30,25 +30,17 @@ describe('AuthService', function () {
         const requestMockInstance = new MockAdapter(requestInstance);
 
         it('should return JWT token in response data for a valid LoginRequest', async () => {
-            // Debugging mock setup
+            
             console.log(`Setting up mock response for URL: ${URL}`);
             console.log(`Mocking response with token: ${RESPONSE_TOKEN}`);
-            console.log(`Valid email: ${VALID_EMAIL}`);  // Debugging line
-            console.log(`Valid password: ${VALID_PASSWORD}`);  // Debugging line
-
-            // Mock the response
+            
             requestMockInstance.onPost(URL, VALID_LOGIN_REQUEST).reply(200, RESPONSE_TOKEN);
 
             try {
                 const result = await getAuthToken(VALID_LOGIN_REQUEST);
                 
-                // Debugging received result
-                console.log(`Auth token received: ${result}`);
-                
-                expect(result).to.equal(RESPONSE_TOKEN); // Compare received token with expected token
+                expect(result).to.equal(RESPONSE_TOKEN);
             } catch (error) {
-                // Debugging error handling
-                console.error("Error occurred while fetching auth token:", error);
                 assert.fail("Expected no error");
             }
         });
@@ -58,8 +50,7 @@ describe('AuthService', function () {
                 await getAuthToken(INVALID_LOGIN_REQUEST);
                 assert.fail("Expected to catch error");
             } catch (error) {
-                // Debugging error message
-                console.log("Caught error as expected:", error.message);
+
                 expect(error.message).to.equal("Invalid email or password!");
             }
         });
