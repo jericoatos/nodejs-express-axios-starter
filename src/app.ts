@@ -12,11 +12,15 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-
-nunjucks.configure('views', {
 app.set('view engine', 'html')
 
-const env =nunjucks.configure('views', {
+nunjucks.configure('views', {
+autoescape: true,
+express: app
+});
+
+
+const env = nunjucks.configure('views', {
     autoescape: true,
     express: app
 });
