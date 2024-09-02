@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { JobRoleResponse } from "../models/JobRoleResponse";
 
 axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8080/';
-export const URL: string = "/api/job-roles/";
+export const URL: string = "/api/job-roles";
 
 
 export const getJobRoles = async (): Promise<JobRoleResponse[]> => {

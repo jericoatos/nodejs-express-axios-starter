@@ -9,6 +9,9 @@ import { dateFilter } from "./filter/DateFilter";
 
 const app = express();
 
+app.use(express.static('public'));
+app.set('view engine', 'html')
+
 const env =nunjucks.configure('views', {
     autoescape: true,
     express: app
@@ -33,5 +36,4 @@ app.listen(3000, () => {
     console.log('Server started on port 3000');
 });
 
-app.get('/', getAllDatabases);
 app.get('/job-roles', getAllJobRoles);
