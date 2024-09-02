@@ -2,14 +2,16 @@ import express from "express";
 import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import session from "express-session";
+import path from 'path';
 
 import { getAllDatabases } from "./controllers/TestController";
 
-//const express = require('express');
 const app = express();
-const path = require('path');
+
 app.use(express.static('public'));
 
+app.use(express.static('public'));
+app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 nunjucks.configure('views', {
