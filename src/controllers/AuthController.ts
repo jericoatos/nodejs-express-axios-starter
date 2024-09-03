@@ -11,6 +11,7 @@ export const postLoginForm = async (req: express.Request, res: express.Response)
         res.redirect('/');
     } catch (error) {
         res.locals.errormessage = error.message;
+        console.log("Error details:", JSON.stringify(error.message));
         res.render('loginForm', req.body);
     }
 }
