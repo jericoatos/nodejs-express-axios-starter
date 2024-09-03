@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Open Job Roles</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/style/styles.css">
+        <link rel="icon" type="image/x-icon" id="companieslogo" href="https://companieslogo.com/img/orig/KNOS.L-8a0d29cc.png?t=1720244492">
+    </head>
+    <body>
+        {% include "kainosHeader.html" %}
+
+        <main class="container mt-5">
+            <h1 class="mb-4">Job Roles</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Role Name</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Closing Date</th>
+                        <th scope="col">Capability Name</th>
+                        <th scope="col">Band Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for jobRole in jobRoles %}
+                    <tr>
+                        <td>{{ jobRole.roleName }}</td>
+                        <td>{{ jobRole.location }}</td>
+                        <td>{{ jobRole.closingDate | date }}</td>           
+                        <td>{{ jobRole.capabilityName }}</td>
+                        <td>{{ jobRole.bandName }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
+
+        {% include "kainosFooter.html" %}
+    </body>
+</html>
