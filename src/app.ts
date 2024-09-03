@@ -2,7 +2,6 @@ import express from "express";
 import session from "express-session";
 import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
-import session from "express-session";
 import path from 'path';
 
 import { getAllJobRoles } from "./controllers/JobRoleController";
