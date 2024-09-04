@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import session from "express-session";
 import path from 'path';
 
-import { getAllJobRoles } from "./controllers/JobRoleController";
+import { getAllJobRoles, getSingleJobRole } from "./controllers/JobRoleController";
 import { dateFilter } from "./filter/DateFilter";
 
 const app = express();
@@ -13,6 +13,7 @@ app.use(express.static('public'));
 app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'html')
+
 
 nunjucks.configure('views', {
 autoescape: true,
@@ -50,3 +51,6 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 app.get('/job-roles', getAllJobRoles);
+app.get('/job-roles/:id', getSingleJobRole);
+
+
