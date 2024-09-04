@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/style/styles.css">
+    <link rel="icon" type="image/x-icon" id="companieslogo" href="https://companieslogo.com/img/orig/KNOS.L-8a0d29cc.png?t=1720244492">
+</head>
+<body>
+    {% include "kainosHeader.html" %}
+
+    <main class="container mt-4">
+        {% if errormessage %}
+        <h3>{{ errormessage }}</h3>
+    {% endif %}
+    <br>
+    <h3>Login Now</h3>
+    <form action="/loginForm" method="post">
+        <label>Email<span>*</span></label>
+        <input id="email" name="email" value="{{email}}" type="email" placeholder="Enter Email">
+        <br><br>
+        <label>Password<span>*</span></label>
+        <input id="password" name="password" value="{{password}}" type="password" placeholder="Enter Password">
+        <br><br>
+        <button type="submit" id="submit">Submit</button>
+    </form>
+    <br>
+    <br>
+</main>
+
+    {% include "kainosFooter.html" %}
+</body>
+</html>
+
+
