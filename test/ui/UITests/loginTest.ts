@@ -28,7 +28,7 @@ describe('Login Tests', function () {
                     }
                 });
             });
-    describe('Local Host - Login', function () {
+    describe('AWS - Login', function () {
                 it('should go back to login page', async function loginTest() {
                     this.timeout(15000);
                     const driver = await new Builder().forBrowser("chrome").build();
