@@ -10,9 +10,11 @@
 <body>
     {% include "kainosHeader.html" %}
 
-    {% if errormessage %}
+    <main class="container mt-4">
+        {% if errormessage %}
         <h3>{{ errormessage }}</h3>
     {% endif %}
+    <br>
     <h3>Login Now</h3>
     <form action="/loginForm" method="post">
         <label>Email<span>*</span></label>
@@ -23,6 +25,9 @@
         <br><br>
         <button type="submit" id="submit">Submit</button>
     </form>
+    <br>
+    <br>
+</main>
 
     {% include "kainosFooter.html" %}
 </body>
