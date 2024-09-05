@@ -1,0 +1,20 @@
+{
+    "defaults": {
+      "concurrency": 1,
+      "standard": "WCAG2AA",
+      "runner": [
+        "axe"
+      ],
+      "chromeLaunchConfig": {
+        "args": [
+          "--no-sandbox"
+        ]
+      },
+      "timeout": 60000
+    },
+    "urls": [
+        "https://jd5pri3k2r.eu-west-1.awsapprunner.com/",
+        "https://jd5pri3k2r.eu-west-1.awsapprunner.com/job-roles",
+        "http://localhost:3000"
+    ]
+  }
