@@ -14,7 +14,7 @@ const jobRoleResponse : JobRoleResponse = {
     closingDate: new Date(16930780000000)
 }
 
-describe('EmployeeController', function () {
+describe('JobRoleController', function () {
     afterEach(() => {
         sinon.restore();
     });
@@ -41,13 +41,13 @@ describe('EmployeeController', function () {
             const errorMessage: string = "Error message";
             sinon.stub(JobRoleService, 'getJobRoles').rejects(new Error(errorMessage));
         
-            const req: Partial<Request> = {}; 
+            const req = { params: { id: '1' }, session: { token: 'test-token' } };
             const res = {
                 render: sinon.spy(), 
                 locals: { errorMessage: '' }, 
             } as unknown as Response;
         
-            await JobRoleController.getAllJobRoles(req as Request, res as Response);
+            await JobRoleController.getAllJobRoles(req as unknown as Request, res as Response);
         
             expect((res.render as sinon.SinonSpy).calledOnce).to.be.true;
         

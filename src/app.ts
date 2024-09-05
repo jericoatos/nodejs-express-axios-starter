@@ -7,7 +7,8 @@ import path from 'path';
 import { getAllJobRoles } from "./controllers/JobRoleController";
 import { dateFilter } from "./filter/DateFilter";
 import { getLoginForm, logout, postLoginForm } from "./controllers/AuthController";
-import { setLoggedInStatus } from "./middleware/AuthMiddleware";
+import { allowRoles, setLoggedInStatus } from "./middleware/AuthMiddleware";
+import { UserRole } from "./models/JwtToken";
 
 const app = express();
 
@@ -70,4 +71,4 @@ app.get('/', async (req: express.Request, res: express.Response) => {
   res.render("home.html");
 });
 
-app.get('/job-roles', getAllJobRoles);
+app.get('/job-roles', allowRoles([UserRole.Admin, UserRole.User]), getAllJobRoles);

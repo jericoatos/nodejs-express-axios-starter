@@ -19,10 +19,11 @@ describe('JobRoleService', function () {
     describe('getJobRoles', function () {
         it('should return job roles from response', async () => {
             const data = [jobRoleResponse];
+            const token = 'test-token';
 
             mock.onGet(URL).reply(200, data);
 
-            const results = await getJobRoles();    
+            const results = await getJobRoles(token);    
 
             const expectedDate = jobRoleResponse.closingDate.toISOString();
 
@@ -36,9 +37,10 @@ describe('JobRoleService', function () {
 
         it('should throw exception when 500 error returned from axios', async () => {
             mock.onGet(URL).reply(500);
+            const token = 'test-token';
     
             try {
-              await getJobRoles();
+              await getJobRoles(token);
             } catch (e) {
               expect(e.message).to.equal('Failed to get job roles');
               return;
