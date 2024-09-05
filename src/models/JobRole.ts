@@ -1,5 +1,5 @@
 export type JobRole = {
-    jobRoleId: Number,
+    jobRoleId: number,
     roleName: string,
     description: string,
     responsibilities: string,

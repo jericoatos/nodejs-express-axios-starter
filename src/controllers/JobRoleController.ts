@@ -1,6 +1,6 @@
 import express from "express"; 
 import * as JobRoleService from "../services/JobRoleService";
-import { getJobRoles, getJobRoleById } from"../services/JobRoleService"
+
 
 export const getAllJobRoles = async (req: express.Request, res: express.Response): Promise<void> => {
     try {

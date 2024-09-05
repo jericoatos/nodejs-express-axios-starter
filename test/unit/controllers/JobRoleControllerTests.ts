@@ -17,7 +17,7 @@ const jobRoleResponse : JobRoleResponse = {
     closingDate: new Date(16930780000000)
 }
 
-describe('EmployeeController', function () {
+describe('JobRoleController', function () {
     afterEach(() => {
         sinon.restore();
     });
@@ -61,6 +61,7 @@ describe('EmployeeController', function () {
     })
 })
 
+
 const jobRole: JobRole = {
     jobRoleId: 2,
     roleName: "Software Engineer",
@@ -74,45 +75,68 @@ const jobRole: JobRole = {
     statusName: "Open",
     numberOfOpenPositions: 3
 };
-
 describe('JobRoleController', function () {
     afterEach(() => {
         sinon.restore();
     });
 
     describe('getSingleJobRole', function () {
-        it('should render the view with job role data when job role is found', async () => {
-            sinon.stub(JobRoleService, 'getJobRoleById').resolves(jobRole);
+        it('should render view with job role data when job role is found', async () => {
+       
+            const getJobRoleByIdStub = sinon.stub(JobRoleService, 'getJobRoleById').resolves(jobRole);
 
             const req: Partial<Request> = { params: { id: "2" } };
             const res = {
                 render: sinon.spy(),
                 status: sinon.stub().returnsThis(),
+                send: sinon.spy(),
             } as unknown as Response;
 
+ 
             await JobRoleController.getSingleJobRole(req as Request, res as Response);
 
-            expect(res.render.calledOnce).to.be.true;
-            expect(res.render.calledWith('job-role-information', { jobRole: jobRole })).to.be.true;
+     
+            const renderSpy = res.render as sinon.SinonSpy;
+            expect(renderSpy.calledOnce).to.be.true;
+            expect(renderSpy.calledWith('job-role-information', { jobRole: jobRole })).to.be.true;
+
+            const statusStub = res.status as sinon.SinonStub;
+            expect(statusStub.notCalled).to.be.true;
+
+            const sendSpy = res.send as sinon.SinonSpy;
+            expect(sendSpy.notCalled).to.be.true;
+
+        
+            expect(getJobRoleByIdStub.calledOnceWith("2")).to.be.true;
         });
 
         it('should return 404 and not render the view when job role is not found', async () => {
+           
             sinon.stub(JobRoleService, 'getJobRoleById').resolves(null);
 
             const req: Partial<Request> = { params: { id: "999" } };
             const res = {
                 status: sinon.stub().returnsThis(),
                 send: sinon.spy(),
+                render: sinon.spy(),
             } as unknown as Response;
 
+        
             await JobRoleController.getSingleJobRole(req as Request, res as Response);
 
-            expect(res.status.calledOnceWith(404)).to.be.true;
-            expect(res.send.calledOnceWith('Job role not found')).to.be.true;
-            expect(res.render.called).to.be.false;
+           
+            const statusStub = res.status as sinon.SinonStub;
+            expect(statusStub.calledOnceWith(404)).to.be.true;
+
+            const sendSpy = res.send as sinon.SinonSpy;
+            expect(sendSpy.calledOnceWith('Job role not found')).to.be.true;
+
+            const renderSpy = res.render as sinon.SinonSpy;
+            expect(renderSpy.notCalled).to.be.true;
         });
 
         it('should return 500 and not render the view when an error occurs', async () => {
+           
             const errorMessage = "Error retrieving job role";
             sinon.stub(JobRoleService, 'getJobRoleById').rejects(new Error(errorMessage));
 
@@ -120,13 +144,20 @@ describe('JobRoleController', function () {
             const res = {
                 status: sinon.stub().returnsThis(),
                 send: sinon.spy(),
+                render: sinon.spy(),
             } as unknown as Response;
 
+        
             await JobRoleController.getSingleJobRole(req as Request, res as Response);
 
-            expect(res.status.calledOnceWith(500)).to.be.true;
-            expect(res.send.calledOnceWith('Error retrieving job role')).to.be.true;
-            expect(res.render.called).to.be.false;
+            const statusStub = res.status as sinon.SinonStub;
+            expect(statusStub.calledOnceWith(500)).to.be.true;
+
+            const sendSpy = res.send as sinon.SinonSpy;
+            expect(sendSpy.calledOnceWith('Error retrieving job role')).to.be.true;
+
+            const renderSpy = res.render as sinon.SinonSpy;
+            expect(renderSpy.notCalled).to.be.true;
         });
     });
 });

@@ -18,7 +18,7 @@ export const getJobRoles = async (): Promise<JobRoleResponse[]> => {
     }
 } 
 
-export const getJobRoleById = async (id: String): Promise<JobRole> => {
+export const getJobRoleById = async (id: string): Promise<JobRole> => {
     try {
         const response: AxiosResponse = await axios.get(`${URL}/${id}`);
         

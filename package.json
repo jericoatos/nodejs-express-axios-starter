@@ -5,7 +5,7 @@
     "linter": "npx eslint .",
     "test": "mocha --require ts-node/register test/unit/**/*.ts",
     "test-ui": "mocha --require ts-node/register --timeout 10000 test/ui/**/*.ts",
-    "build": "tsc --build"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "Shaun Ganley <shaung@kainos.com>",
@@ -16,6 +16,7 @@
     "audit": "^0.0.6",
     "axios": "^1.7.5",
     "body-parser": "^1.20.2",
+    "chai": "^4.3.7",
     "eslint": "^8.57.0",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
@@ -36,7 +37,6 @@
     "@types/selenium-webdriver": "^4.1.26",
     "@types/sinon": "^17.0.3",
     "axios-mock-adapter": "^1.22.0",
-    "chai": "^5.1.1",
     "chromedriver": "^127.0.2",
     "eslint": "^8.57.0",
     "mocha": "^10.7.3",
