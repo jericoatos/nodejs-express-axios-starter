@@ -1,72 +1,76 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { Request, Response } from 'express';
-import { describe, it, afterEach } from 'mocha';
-import * as AuthController from '../../../src/controllers/AuthController';
-import * as AuthService from '../../../src/services/AuthService';
-
-describe('AuthMiddleware', function () {
+import express from "express";
+import { allowRoles } from '../../../src/middleware/AuthMiddleware';
+import { UserRole } from '../../../src/models/JwtToken';
+import "core-js/stable/atob";
+import jwt from 'jsonwebtoken';
+ 
+describe('Authorization Middleware', function () {
   afterEach(() => {
-    sinon.restore();
+      sinon.restore();
   });
-
-  describe('logout', function () {
-    it('should set token to undefined and redirect to login page', async () => {
-      const req = {
-        session: { token: '' },
-      } as Partial<Request> as Request;
-
-      const res = {
-        redirect: sinon.stub() as sinon.SinonStub,
-      };
-
-      await AuthController.logout(req, res as unknown as Response);
-
-      expect(res.redirect.calledWith('/loginForm')).to.be.true;
-      expect(req.session.token).to.be.undefined;
+ 
+  describe('allowRoles', function () {
+    it('should return 401 when user is NOT logged in', async () => {
+        const req = {
+          session: { token: undefined }
+        } as Partial<express.Request> as express.Request;
+    
+        const statusStub = sinon.stub().returnsThis() as sinon.SinonStub;
+        const sendStub = sinon.stub().returnsThis() as sinon.SinonStub;
+    
+        const res = {
+          status: statusStub,
+          send: sendStub
+        } as Partial<express.Response> as express.Response;
+    
+        const next = sinon.stub();
+    
+        const middleware = allowRoles([UserRole.Admin, UserRole.User]);
+    
+        await middleware(req as express.Request, res as express.Response, next);
+    
+        expect(statusStub.calledOnce).to.be.true;
+        expect(statusStub.calledWith(401)).to.be.true;
+    
+        expect(sendStub.calledOnce).to.be.true;
+        expect(sendStub.calledWith('Not logged in')).to.be.true;
+    
+        expect(next.notCalled).to.be.true;
+      });
     });
-  });
+    
+ 
 
-  describe('getLoginForm', function () {
-    it('should render loginForm', async () => {
-      const req = {} as Request;
-      const res = {
-        render: sinon.stub() as sinon.SinonStub,
-        locals: { loggedin: false },
-      };
-
-      await AuthController.getLoginForm(req, res as unknown as Response);
-
-      expect(res.render.calledOnce).to.be.true;
-      expect(res.render.calledWith('loginForm')).to.be.true;
+    it('should call next() when user is logged in with a valid token and has an authorized role', async () => {
+        const secretKey = 'SUPER_SECRET';
+        const validJwtToken = jwt.sign({ Role: UserRole.Admin }, secretKey, { expiresIn: '8h' });
+    
+        const req: Partial<express.Request> = {
+          session: { token: validJwtToken }
+        } as express.Request;
+    
+        const statusStub = sinon.stub().returnsThis() as sinon.SinonStub;
+        const sendStub = sinon.stub().returnsThis() as sinon.SinonStub;
+        const redirectStub = sinon.stub().returnsThis() as sinon.SinonStub;
+    
+        const res: Partial<express.Response> = {
+            status: statusStub,
+            send: sendStub,
+            redirect: redirectStub
+        } as unknown as express.Response;
+    
+        const next = sinon.stub();
+    
+        const middleware = allowRoles([UserRole.Admin]);
+    
+        await middleware(req as express.Request, res as express.Response, next);
+    
+        expect(next.calledOnce).to.be.true;
+    
+        expect(statusStub.notCalled).to.be.true;
+        expect(sendStub.notCalled).to.be.true;
+        expect(redirectStub.notCalled).to.be.true;
+      });
     });
-  });
-
-  describe('postLoginForm', function () {
-    const VALID_PASSWORD = 'validPa$$word123!';
-
-    it('should show an error message when email is invalid', async () => {
-      const error = 'Error';
-      sinon.stub(AuthService, 'getAuthToken').rejects(new Error(error));
-
-      const req = {
-        body: {
-          email: 'invalid',
-          password: VALID_PASSWORD,
-        },
-      } as Partial<Request> as Request;
-
-      const res = {
-        render: sinon.stub() as sinon.SinonStub,
-        locals: { errormessage: '' },
-      };
-
-      await AuthController.postLoginForm(req, res as unknown as Response);
-
-      expect(res.render.calledWith('loginForm')).to.be.true;
-      expect(res.locals.errormessage).to.equal(error);
-      expect(req.body.email).to.equal('invalid');
-      expect(req.body.password).to.equal(VALID_PASSWORD);
-    });
-  });
-});
