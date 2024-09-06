@@ -70,7 +70,6 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 
 app.get('/job-roles', allowRoles([UserRole.Admin, UserRole.User]), getAllJobRoles);
 
-app.get('/job-roles', getAllJobRoles);
-app.get('/job-roles/:id', getSingleJobRole);
+app.get('/job-roles/:id', allowRoles([UserRole.Admin, UserRole.User]), getSingleJobRole);
 
 app.get('/error', getErrorMessage);
