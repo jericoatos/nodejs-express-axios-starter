@@ -6,7 +6,7 @@ import path from 'path';
 
 import { getAllJobRoles } from "./controllers/JobRoleController";
 import { dateFilter } from "./filter/DateFilter";
-import { getLoginForm, logout, postLoginForm } from "./controllers/AuthController";
+import { getloginErrorMessage, getLoginForm, logout, postLoginForm } from "./controllers/AuthController";
 import { allowRoles, setLoggedInStatus } from "./middleware/AuthMiddleware";
 import { UserRole } from "./models/JwtToken";
 
@@ -61,11 +61,7 @@ app.get('/loginForm', getLoginForm);
 app.post('/loginForm', postLoginForm);
 
 app.get('/logout', logout)
-
-app.get('/', async (req: express.Request, res: express.Response) => {
-  res.render("home.html");
-});
-
+app.get('/loginErrorMessage', getloginErrorMessage )
 
 app.get('/', async (req: express.Request, res: express.Response) => {
   res.render("home.html");
