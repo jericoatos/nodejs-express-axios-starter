@@ -8,8 +8,9 @@
     "build": "tsc --build",
     "test-aws": "pa11y-ci --config Accessibility/pa11y-aws-config.json",
     "test-local": "pa11y-ci --config Accessibility/pa11y-local-config.json",
-    "test-pa11y": "pa11y-ci --config Accessability/pa11y-config.json"
+    "test-pa11y": "pa11y-ci --config Accessibility/pa11y-config.json"
   },
+  "type": "module",
   "keywords": [],
   "author": "Shaun Ganley <shaung@kainos.com>",
   "license": "ISC",
@@ -41,9 +42,9 @@
     "chromedriver": "^127.0.2",
     "eslint": "^8.57.0",
     "mocha": "^10.7.3",
+    "nodemon": "^3.1.0",
     "pa11y": "^8.0.0",
     "pa11y-ci": "^3.1.0",
-    "nodemon": "^3.1.0",
     "sass": "^1.75.0",
     "selenium-webdriver": "^4.24.0",
     "sinon": "^18.0.0",
