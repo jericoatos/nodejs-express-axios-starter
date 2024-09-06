@@ -1,4 +1,4 @@
-const pa11y = require('pa11y');
+import pa11y from 'pa11y';
 
 // List of URLs to test
 const urls = [
