@@ -12,37 +12,35 @@ describe('Authorization Middleware', function () {
   });
  
   describe('allowRoles', function () {
-    it('should return 401 when user is NOT logged in', async () => {
-        const req = {
-          session: { token: undefined }
-        } as Partial<express.Request> as express.Request;
-    
-        const statusStub = sinon.stub().returnsThis() as sinon.SinonStub;
-        const sendStub = sinon.stub().returnsThis() as sinon.SinonStub;
-    
-        const res = {
-          status: statusStub,
-          send: sendStub
-        } as Partial<express.Response> as express.Response;
-    
-        const next = sinon.stub();
-    
-        const middleware = allowRoles([UserRole.Admin, UserRole.User]);
-    
-        await middleware(req as express.Request, res as express.Response, next);
-    
-        expect(statusStub.calledOnce).to.be.true;
-        expect(statusStub.calledWith(401)).to.be.true;
-    
-        expect(sendStub.calledOnce).to.be.true;
-        expect(sendStub.calledWith('Not logged in')).to.be.true;
-    
-        expect(next.notCalled).to.be.true;
-      });
+    it('should redirect to loginErrorMessage page when user is NOT logged in', async () => {
+      const req = {
+        session: { token: undefined }
+      } as Partial<express.Request> as express.Request;
+  
+      const statusStub = sinon.stub().returnsThis();
+      const redirectStub = sinon.stub();
+  
+      const res = {
+        status: statusStub,
+        redirect: redirectStub
+      } as Partial<express.Response> as express.Response;
+  
+      const next = sinon.stub();
+  
+      const middleware = allowRoles([UserRole.Admin, UserRole.User]);
+  
+      await middleware(req as express.Request, res as express.Response, next);
+  
+      expect(statusStub.calledOnce).to.be.true;
+      expect(statusStub.calledWith(401)).to.be.true;
+  
+      expect(redirectStub.calledOnce).to.be.true;
+      expect(redirectStub.calledWith('/loginErrorMessage')).to.be.true;
+  
+      expect(next.notCalled).to.be.true;
     });
-    
- 
-
+  });
+  
     it('should call next() when user is logged in with a valid token and has an authorized role', async () => {
         const secretKey = 'SUPER_SECRET';
         const validJwtToken = jwt.sign({ Role: UserRole.Admin }, secretKey, { expiresIn: '8h' });

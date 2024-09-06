@@ -11,7 +11,7 @@ export const setLoggedInStatus = (req: express.Request, res: express.Response, n
 export const allowRoles = (allowedRoles: UserRole[]) => {
     return (req: express.Request, res: express.Response, next: express.NextFunction) => {
         if (!req.session.token) {
-            return res.redirect('/loginErrorMessage');
+            return res.status(401).redirect('/loginErrorMessage');
         }
 
         const decodedToken: JwtToken = jwtDecode(req.session.token);
