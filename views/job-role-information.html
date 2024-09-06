@@ -11,14 +11,12 @@
     {% include "kainosHeader.html" %}
 
     <main class="container mt-5">
-        <h1 class="mb-4">Job Role Information</h1>
-        
-        <!-- Display job role information using paragraphs with labels -->
+        <h1 class="mb-4">{{ jobRole.roleName }}</h1>
+    
         <div class="job-role-details">
-            <p><strong>Role Name:</strong> {{ jobRole.roleName }}</p>
             <p><strong>Description:</strong> {{ jobRole.description }}</p>
             <p><strong>Responsibilities:</strong> {{ jobRole.responsibilities }}</p>
-            <p><strong>Sharepoint URL:</strong> <a href="{{ jobRole.sharepointUrl }}" target="_blank">{{ jobRole.sharepointUrl }}</a></p>
+            <p><strong>Sharepoint URL:</strong> <a id="jobspeclink" href="{{ jobRole.sharepointUrl }}" target="_blank">{{ jobRole.sharepointUrl }}</a></p>
             <p><strong>Location:</strong> {{ jobRole.location }}</p>
             <p><strong>Capability Name:</strong> {{ jobRole.capabilityName }}</p>
             <p><strong>Band Name:</strong> {{ jobRole.bandName }}</p>
@@ -26,9 +24,11 @@
             <p><strong>Status Name:</strong> {{ jobRole.statusName }}</p>
             <p><strong>Number of Open Positions:</strong> {{ jobRole.numberOfOpenPositions }}</p>
             <br>
+            <br>
+            <br>
+            <br>
         </div>
     </main>
-    
     {% include "kainosFooter.html" %}
 </body>
 </html>

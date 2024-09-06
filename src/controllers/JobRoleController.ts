@@ -12,20 +12,22 @@ export const getAllJobRoles = async (req: express.Request, res: express.Response
     }
 }
 
-
-
 export const getSingleJobRole = async (req: express.Request, res: express.Response): Promise<void> => {
     try {
         const { id } = req.params; 
         console.log(`Fetching job role with ID: ${id}`);
         const jobRole = await JobRoleService.getJobRoleById(id);
         if (!jobRole) {
-            res.status(404).send('Job role not found');
+            res.status(404).redirect('../error');
             return;
         }
         res.render('job-role-information', { jobRole });
     } catch (e) {
         console.error(e.message);
-        res.status(500).send('Error retrieving job role');
+        res.status(500).redirect('../error');
+        return;
     }
 }  
+export const getErrorMessage = async (req: express.Request, res: express.Response): Promise<void> => {
+    res.render('error');
+}

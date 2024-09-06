@@ -4,7 +4,7 @@ import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import path from 'path';
 
-import { getAllJobRoles, getSingleJobRole } from "./controllers/JobRoleController";
+import { getAllJobRoles, getErrorMessage, getSingleJobRole } from "./controllers/JobRoleController";
 import { dateFilter } from "./filter/DateFilter";
 import { getLoginForm, logout, postLoginForm } from "./controllers/AuthController";
 import { setLoggedInStatus } from "./middleware/AuthMiddleware";
@@ -14,6 +14,7 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.set('view engine', 'html')
 
 app.use(express.static('public'));
@@ -70,7 +71,8 @@ app.get('/', async (req: express.Request, res: express.Response) => {
   res.render("home.html");
 });
 
+
 app.get('/job-roles', getAllJobRoles);
 app.get('/job-roles/:id', getSingleJobRole);
 
-
+app.get('/error', getErrorMessage);
