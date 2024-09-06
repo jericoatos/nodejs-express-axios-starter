@@ -12,7 +12,7 @@
 
         <main class="container mt-5">
             <h1 class="mb-4">Job Roles</h1>
-            <table class="table table-striped table-bordered">
+            <table class="table table-striped table-bordered" id="jobRoleListTable">
                 <thead>
                     <tr>
                         <th scope="col">Role Name</th>
@@ -25,7 +25,7 @@
                 <tbody>
                     {% for jobRole in jobRoles %}
                     <tr>
-                        <td><a href="/job-roles/{{ jobRole.jobRoleId }}" target="_blank">{{ jobRole.roleName }}</a></td>
+                        <td><a href="/job-roles/{{ jobRole.jobRoleId }}" target="_blank" id="jobRoleId_{{ jobRole.jobRoleId }}">{{ jobRole.roleName }}</a></td>
                         <td>{{ jobRole.location }}</td>
                         <td>{{ jobRole.closingDate | date }}</td>           
                         <td>{{ jobRole.capabilityName }}</td>
