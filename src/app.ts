@@ -9,6 +9,7 @@ import { dateFilter } from "./filter/DateFilter";
 import { getloginErrorMessage, getLoginForm, logout, postLoginForm } from "./controllers/AuthController";
 import { allowRoles, setLoggedInStatus } from "./middleware/AuthMiddleware";
 import { UserRole } from "./models/JwtToken";
+import { getAnswers, getQuestionFive, getQuestionFour, getQuestionOne, getQuestionThree, getQuestionTwo, getQuiz, getResultJob } from "./controllers/QuizController";
 
 const app = express();
 
@@ -73,3 +74,12 @@ app.get('/job-roles', allowRoles([UserRole.Admin, UserRole.User]), getAllJobRole
 app.get('/job-roles/:id', allowRoles([UserRole.Admin, UserRole.User]), getSingleJobRole);
 
 app.get('/error', getErrorMessage);
+
+app.get('/questionOne', getQuestionOne);
+app.get('/questionTwo', getQuestionTwo);
+app.get('/questionThree', getQuestionThree);
+app.get('/questionFour', getQuestionFour);
+app.get('/questionFive', getQuestionFive);
+app.get('/resultJob', getResultJob);
+app.get('/checkAnswers', getAnswers);
+app.get('/quiz', getQuiz);

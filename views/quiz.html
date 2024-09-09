@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/style/styles.css">
+    <link rel="icon" type="image/x-icon" id="companieslogo" href="https://companieslogo.com/img/orig/KNOS.L-8a0d29cc.png?t=1720244492">
+</head>
+<body>
+    {% include "kainosHeader.html" %}
+
+    <main class="container mt-5">
+        <div class="question-container" id="questionContainer">
+            <!-- Question content will be loaded here -->
+        </div>
+    </main>
+
+    {% include "kainosFooter.html" %}
+</body>
+</html>
+
+<script>
+
+localStorage.clear();
+sessionStorage.clear();
+
+    let currentQuestionIndex = 0;
+    const questions = [
+        'questionOne',
+        'questionTwo',
+        'questionThree',
+        'questionFour',
+        'questionFive',
+    ];
+
+    function loadQuestion(index) {
+        if (index >= 0 && index < questions.length) {
+            fetch(questions[index])
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('questionContainer').innerHTML = data;
+                })
+                .catch(error => console.error('Error loading question:', error));
+        }
+    }
+
+    function saveAnswer() {
+        const selectedAnswer = document.querySelector('input[id="answer"]:checked');
+        if (selectedAnswer) {
+            localStorage.setItem('question' + (currentQuestionIndex + 1), selectedAnswer.value);
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion(currentQuestionIndex);
+            } else {
+                window.location.href = '/checkAnswers';
+            }
+        } else {
+            alert('Please select an answer.');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadQuestion(currentQuestionIndex);
+    });
+</script>

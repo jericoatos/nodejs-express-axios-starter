@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Check Answers</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/style/styles.css">
+    <link rel="icon" type="image/x-icon" id="companieslogo"
+        href="https://companieslogo.com/img/orig/KNOS.L-8a0d29cc.png?t=1720244492">
+</head>
+
+<body>
+    {% include "kainosHeader.html" %}
+
+    <main class="container mt-5">
+        <h1 class="mb-4">Check Your Answers</h1>
+        <div id="answersContainer">
+            <!-- Questions and answers will be populated here -->
+        </div>
+        <button type="submit" onclick="window.location.href='/resultJob'">Submit Answers</button>
+    </main>
+
+    {% include "kainosFooter.html" %}
+</body>
+
+</html>
+
+<script>
+    const questions = [
+        "Do you enjoy writing and maintaining code as a primary part of your job?",
+        "Are you comfortable leading and guiding a team through complex technical decisions?",
+        "Do you have experience in designing and implementing software testing strategies?",
+        "Are you interested in understanding and translating customer needs into technical requirements?",
+        "Do you have experience designing large-scale software architectures and making high-level technical decisions?"
+    ];
+
+    const answerLabels = {
+        "likes-maintaining-code-as-primary-part-of-job": "Yes",
+        "does-not-like-maintaining-code-as-primary-part-of-job": "No",
+        "not-sure-if-likes-maintaining-code-as-primary-part-of-job": "Not sure",
+        "likes-leading-team-through-decisions": "Yes",
+        "does-not-like-leading-team-through-decisions": "No",
+        "not-sure-if-leading-team-through-decisions": "Not sure",
+        "has-experience-designing-implementing-software-testing": "Yes",
+        "does-not-have-experience-designing-implementing-software-testing": "No",
+        "interested-understanding-translating-customer-needs": "Yes",
+        "not-interested-understanding-translating-customer-needs": "No",
+        "not-sure-if-interested-understanding-translating-customer-needs": "Not sure",
+        "experience-designing-large-scale-software-architecture-and-technical-decisions": "Yes",
+        "no-experience-designing-large-scale-software-architecture-and-technical-decisions": "No"
+
+    };
+
+    function displayAnswers() {
+        const answersContainer = document.getElementById('answersContainer');
+        let htmlContent = '';
+
+        // Loop through the questions and answers
+        for (let i = 0; i < questions.length; i++) {
+            const answerKey = 'question' + (i + 1);
+            const answer = localStorage.getItem(answerKey);
+            const answerText = answerLabels[answer] || 'No answer selected';
+
+            htmlContent += `<h4>Question ${i + 1}:</h4>`;
+            htmlContent += `<p>${questions[i]}</p>`;
+            htmlContent += `<p><strong>Answer:</strong> ${answerText}</p>`;
+            htmlContent += '<hr>';
+        }
+
+        answersContainer.innerHTML = htmlContent;
+    }
+
+    document.addEventListener('DOMContentLoaded', displayAnswers);
+</script>
