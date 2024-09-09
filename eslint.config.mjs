@@ -10,7 +10,14 @@ export default tseslint.config(
     ignores: ["dist/", "node_modules/"],
     rules: {
       // Disable the rule that disallows console statements
-      "no-console": "off"
+      "no-console": "off",
+      // Ensure console is defined
+      "no-undef": "off"
+    },
+    languageOptions: {
+      globals: {
+        console: "readonly"
+      }
     }
   }
 );
