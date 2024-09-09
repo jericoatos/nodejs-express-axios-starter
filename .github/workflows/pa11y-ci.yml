@@ -26,4 +26,4 @@ jobs:
 
       - name: Run Pa11y tests
         run: |
-          node /Users/asharkin/nodejs-express-axios-starter/run-pa11y-tests.js >> /Users/asharkin/nodejs-express-axios-starter/logfile.log
+          node ../nodejs-express-axios-starter/run-pa11y-tests.js >> ../nodejs-express-axios-starter/logfile.log
