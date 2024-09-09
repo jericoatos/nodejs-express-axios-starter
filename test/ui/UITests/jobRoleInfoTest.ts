@@ -17,7 +17,7 @@ describe('Job Role Information', function () {
 			        const href = await element.getAttribute('href');
 
                     await driver.findElement(By.xpath("//table[@id='jobRoleListTable']/tbody/tr/td/a")).click();
-                    await driver.sleep(500);
+                    await driver.sleep(1000);
 
                     const regex = /\d$/;
                     expect(href).to.match(regex, 'URL does not end with the ID number');
@@ -41,7 +41,7 @@ describe('Job Role Information', function () {
                         const href = await element.getAttribute('href');
 
                         await driver.findElement(By.xpath("//table[@id='jobRoleListTable']/tbody/tr/td/a")).click();
-                        await driver.sleep(500);
+                        await driver.sleep(1000);
 
                         const regex = /\d$/;
                         expect(href).to.match(regex, 'URL does not end with the ID number');
