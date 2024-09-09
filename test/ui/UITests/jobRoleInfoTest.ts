@@ -9,15 +9,15 @@ describe('Job Role Information', function () {
                 const driver = await new Builder().forBrowser("chrome").build();
                 try {
                     await driver.get('http://localhost:3000');
-                    await driver.sleep(1000);
+                    await driver.sleep(500);
                     await driver.findElement(By.id('careerslink')).click();
-                    await driver.sleep(1000);
+                    await driver.sleep(500);
 
 			        const element = await driver.findElement(By.xpath("//table[@id='jobRoleListTable']/tbody/tr/td/a"));
 			        const href = await element.getAttribute('href');
 
                     await driver.findElement(By.xpath("//table[@id='jobRoleListTable']/tbody/tr/td/a")).click();
-                    await driver.sleep(1000);
+                    await driver.sleep(500);
 
                     const regex = /\d$/;
                     expect(href).to.match(regex, 'URL does not end with the ID number');
@@ -33,15 +33,15 @@ describe('Job Role Information', function () {
                     const driver = await new Builder().forBrowser("chrome").build();
                     try {
                         await driver.get('https://jd5pri3k2r.eu-west-1.awsapprunner.com/');
-                        await driver.sleep(1000);
+                        await driver.sleep(500);
                         await driver.findElement(By.id('careerslink')).click();
-                        await driver.sleep(1000);
+                        await driver.sleep(500);
 
                         const element = await driver.findElement(By.xpath("//table[@id='jobRoleListTable']/tbody/tr/td/a"));
                         const href = await element.getAttribute('href');
 
                         await driver.findElement(By.xpath("//table[@id='jobRoleListTable']/tbody/tr/td/a")).click();
-                        await driver.sleep(1000);
+                        await driver.sleep(500);
 
                         const regex = /\d$/;
                         expect(href).to.match(regex, 'URL does not end with the ID number');
