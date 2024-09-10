@@ -25,7 +25,8 @@ export const getResultJob = async (req: express.Request, res: express.Response):
 }
 
 export const getAnswers = async (req: express.Request, res: express.Response): Promise<void> => {
-    res.render('checkAnswers');
+    const mykey = process.env.OPENAI_API_KEY;
+    res.render('checkAnswers', {apiKey: mykey});
 }
 
 export const getQuiz = async (req: express.Request, res: express.Response): Promise<void> => {

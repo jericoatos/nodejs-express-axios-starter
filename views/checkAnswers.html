@@ -24,6 +24,8 @@
         <br>
     </main>
 
+    <div id="api" data-total-pages="{{apiKey}}"></div>
+ 
     {% include "kainosFooter.html" %}
 </body>
 
@@ -68,6 +70,7 @@
             htmlContent += `<p>${questions[i]}</p>`;
             htmlContent += `<p><strong>Answer:</strong> ${answerText}</p>`;
             htmlContent += '<hr>';
+
         }
 
         answersContainer.innerHTML = htmlContent;
@@ -105,17 +108,18 @@
 
         // Send request to OpenAI API
         try {
+            const importedKey = document.getElementById('api').getAttribute('data-total-pages');
+
             const response = await fetch('https://api.openai.com/v1/chat/completions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer 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`, // Replace with your actual API key
+                    'Authorization': `Bearer ${importedKey}`,
                 },
                 body: JSON.stringify({
-                    model: 'gpt-3.5-turbo', // Use the appropriate model
+                    model: 'gpt-3.5-turbo', 
                     messages: [{ role: 'user', content: prompt }],
-                    max_tokens: 50, // Adjust as necessary
-                    temperature: 0.2, // Low temperature for more focused responses
+                    max_tokens: 50, 
                 }),
             });
 
@@ -123,7 +127,6 @@
 
             // Display the job role result
             const jobResult = data.choices[0].message.content.trim();
-            alert(`Best suited job role: ${jobResult}`);
             sessionStorage.setItem('jobRole', jobResult);
             window.location.href = '/resultJob';
             // You can also display this result on the page instead of an alert
@@ -132,29 +135,5 @@
             alert('Failed to fetch the job role. Please try again.');
         }
     }
-    async function testOpenAIFetch() {
-    try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer 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`, // Replace with your actual API key
-            },
-            body: JSON.stringify({
-                model: 'gpt-3.5-turbo', // Specify the correct accessible model
-                messages: [{ role: 'user', content: 'Hello, what is your purpose?' }],
-                max_tokens: 50,
-                temperature: 0.2,
-            }),
-        });
-
-        const data = await response.json();
-        console.log(data);
-    } catch (error) {
-        console.error('Error during simple fetch test:', error);
-    }
-}
-
-testOpenAIFetch();
 
 </script>

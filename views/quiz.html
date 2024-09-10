@@ -11,6 +11,8 @@
     {% include "kainosHeader.html" %}
 
     <main class="container mt-5">
+
+        <div id="error-container" class="text-danger mb-3" style="display: none;"></div>
         <div class="question-container" id="questionContainer">
             <!-- Question content will be loaded here -->
         </div>
@@ -40,6 +42,8 @@ sessionStorage.clear();
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('questionContainer').innerHTML = data;
+                    // Show or hide the back button based on the current question index
+                    document.getElementById('backButton').style.display = index > 0 ? 'inline-block' : 'none';
                 })
                 .catch(error => console.error('Error loading question:', error));
         }
@@ -47,7 +51,9 @@ sessionStorage.clear();
 
     function saveAnswer() {
         const selectedAnswer = document.querySelector('input[id="answer"]:checked');
+        const errorContainer = document.getElementById('error-container');
         if (selectedAnswer) {
+            clearError();
             localStorage.setItem('question' + (currentQuestionIndex + 1), selectedAnswer.value);
             currentQuestionIndex++;
             if (currentQuestionIndex < questions.length) {
@@ -56,7 +62,31 @@ sessionStorage.clear();
                 window.location.href = '/checkAnswers';
             }
         } else {
-            alert('Please select an answer.');
+            showError("Please select an answer."); // Display the error message above the question
+        }
+    }
+
+    function showError(message) {
+        const errorContainer = document.getElementById('error-container');
+        if (errorContainer) {
+            errorContainer.textContent = message;
+            errorContainer.style.display = 'block'; // Show the error container
+        }
+    }
+
+    function clearError() {
+        const errorContainer = document.getElementById('error-container');
+        if (errorContainer) {
+            errorContainer.textContent = '';
+            errorContainer.style.display = 'none'; // Hide the error container
+        }
+    }
+
+    function goBack() {
+        // Decrement the question index and load the previous question
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            loadQuestion(currentQuestionIndex);
         }
     }
 
