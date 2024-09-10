@@ -15,11 +15,22 @@
         <h2>Your recommended job is:</h2>
         
         <!-- The results will be shown here -->
-        <div id="resultsContainer"></div>
+        <div id="resultsContainer" class="p-3 bg-white rounded shadow-sm"></div>
+        
     </main>
     {% include "kainosFooter.html" %}
     
     <script>
+        // Fetch the job role result from sessionStorage
+        const jobRole = sessionStorage.getItem('jobRole');
+
+        // Check if the job role exists and display it
+        const resultsContainer = document.getElementById('resultsContainer');
+        if (jobRole) {
+            resultsContainer.innerHTML = `<h3>${jobRole}</h3>`;
+        } else {
+            resultsContainer.innerHTML = `<p>No job role found. Please complete the quiz to get your recommendation.</p>`;
+        }
     </script>
 </body>
 </html>

@@ -122,6 +122,8 @@
             // Display the job role result
             const jobResult = data.choices[0].message.content.trim();
             alert(`Best suited job role: ${jobResult}`);
+            sessionStorage.setItem('jobRole', jobResult);
+            window.location.href = '/resultJob';
             // You can also display this result on the page instead of an alert
         } catch (error) {
             console.error('Error fetching job role:', error);
