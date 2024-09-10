@@ -4,7 +4,7 @@ import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import path from 'path';
 
-import { getAllJobRoles, getErrorMessage, getSingleJobRole } from "./controllers/JobRoleController";
+import { getAllJobRoles, getErrorMessage, getJobRoleForm, getSingleJobRole, postJobRoleForm } from "./controllers/JobRoleController";
 import { dateFilter } from "./filter/DateFilter";
 import { getLoginForm, logout, postLoginForm } from "./controllers/AuthController";
 import { setLoggedInStatus } from "./middleware/AuthMiddleware";
@@ -74,5 +74,7 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 
 app.get('/job-roles', getAllJobRoles);
 app.get('/job-roles/:id', getSingleJobRole);
-
+//app.post('/job-roles',postJobRoleForm);
+app.get('/job-role-form',getJobRoleForm);
+app.post('/job-role-form', postJobRoleForm);
 app.get('/error', getErrorMessage);

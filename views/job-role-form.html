@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Job Role</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/style/styles.css">
+</head>
+<body>
+    {% include "kainosHeader.html" %}
+
+    <main class="container mt-5">
+        <h1 class="mb-4">Add New Job Role</h1>
+        {% if errormessage %}
+        <div class="alert alert-danger">
+            {{ errormessage }}
+        </div>
+        {% endif %}
+        <form action="/job-role-form" method="POST">
+            <div class="form-group">
+                <label for="roleName">Job Role Name</label>
+                <input type="text" class="form-control" id="roleName" name="roleName" value="{{roleName}}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Job Spec Summary</label>
+                <textarea class="form-control" id="description" name="description" value="{{description}}" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="sharepointUrl">Sharepoint Link</label>
+                <input type="url" class="form-control" id="sharepointUrl" name="sharepointUrl" value="{{sharepointUrl}}"required>
+            </div>
+
+            <div class="form-group">
+                <label for="responsibilities">Responsibilities</label>
+                <textarea class="form-control" id="responsibilities" name="responsibilities" value="{{responsibilities}}" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="numberOfOpenPositions">Number of Open Positions</label>
+                <input type="text" class="form-control" id="numberOfOpenPositions" name="numberOfOpenPositions" value="{{numberOfOpenPositions}}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" class="form-control" id="location" name="location" value="{{location}}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="closingDate">Closing Date</label>
+                <input type="date" class="form-control" id="closingDate" name="closingDate"  value="{{closingDate}}" required>
+            </div>
+
+          
+            <div class="form-group">
+                <label for="bandName">Select Band</label>
+                <select class="form-control" id="bandName" name="bandName" value="{{bandName}}" placeholder="select band name" required>
+                    <option value="Apprentice">Apprentice</option>
+                    <option value="Trainee">Trainee</option>
+                    <option value="Associate">Associate</option>
+                    <option value="Senior Associate">Senior Associate</option>
+                    <option value="Consultant">Consultant</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Principal">Principal</option>
+                    <option value="Leadership Community">Leadership Community</option>
+                </select>
+            </div>
+
+         
+            <div class="form-group">
+                <label for="capabilityName">Select Capability</label> <!-- Change name to id? and value to corresponding in table-->
+                <select class="form-control" id="capabilityName" name="capabilityName"  value="{{capabilityName}}"required>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Platforms">Platforms</option>
+                    <option value="Data and Artificial Intelligence">Data and Artificial Intelligence</option>
+                    <option value="Cyber Security">Cyber Security</option>
+                    <option value="Workday">Workday</option>
+                    <option value="Experience Design">Experience Design</option>
+                    <option value="Product">Product</option>
+                    <option value="Delivery">Delivery</option>
+                    <option value="Operations">Operations</option>
+                    <option value="Business Development and Marketing">Business Development and Marketing</option>
+                    <option value="Organisational Stragety and Planning">Organisational Stragety and Planning</option>
+                    <option value="People">People</option>
+                    <option value="Commercial and Financial Management">Commercial and Financial Management</option>
+                    <option value="Business Services Support">Business Services Support</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Job Role</button>
+        </form>
+        <br>
+    </main>
+    {% include "kainosFooter.html" %}
+</body>
+</html>
