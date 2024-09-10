@@ -162,7 +162,7 @@ describe('JobRoleFormValidator', function () {
         });
 
         it('should return error when Band Id is not entered', () => {
-            const jobRole = { ...validJobRole, bandId: undefined as any };
+            const jobRole = { ...validJobRole, bandId: undefined as undefined };
             try {
                 validateJobRoleForm(jobRole);
             } catch (e) {
@@ -173,7 +173,7 @@ describe('JobRoleFormValidator', function () {
         });
 
         it('should return error when Capability Id is not entered', () => {
-            const jobRole = { ...validJobRole, capabilityId: undefined as any };
+            const jobRole = { ...validJobRole, capabilityId: undefined as undefined };
             try {
                 validateJobRoleForm(jobRole);
             } catch (e) {

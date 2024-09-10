@@ -32,7 +32,7 @@ export const getJobRoleById = async (id: string, token: string): Promise<JobRole
     }
 }
 
-export const createJobRole = async(jobRole: JobRoleRequest): Promise<Number> => {
+export const createJobRole = async(jobRole: JobRoleRequest): Promise<number> => {
     validateJobRoleForm(jobRole);
     try{
 

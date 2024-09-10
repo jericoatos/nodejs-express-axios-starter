@@ -1,5 +1,4 @@
 import express from "express"; 
-import * as JobRoleService from "../services/JobRoleService";
 import { createJobRole } from "../services/JobRoleService";
 import { getJobRoleById, getJobRoles } from "../services/JobRoleService";
 
@@ -42,7 +41,7 @@ export const postJobRoleForm = async(req: express.Request, res: express.Response
         res.redirect('/job-roles/'+ id); //changed from regular id, jobroles
     }catch(error) {
     //console.error("Error creating job role:", error);
-       res.locals.errormessage = error.message;
+       res.locals.errorMessage = error.message;
        res.render('job-role-form.html', req.body);
         
     }

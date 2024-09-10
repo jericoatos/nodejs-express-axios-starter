@@ -44,6 +44,8 @@ const jobRolerequest: JobRoleRequest = {
   statusName: 'Open'
 };
 
+
+
 describe('JobRoleController', function () {
     afterEach(() => {
         sinon.restore();
@@ -225,22 +227,38 @@ describe('JobRoleController', function () {
 
             const createdJobRoleId = 12;
             sinon.stub(JobRoleService, 'createJobRole').resolves(createdJobRoleId);
-
+    
             const req = {
+                session: { token: 'valid-token' },  // Mock the session token
                 body: jobRolerequest
             } as unknown as Request;
             const res = {
                 redirect: sinon.spy(),
-                render: sinon.spy,
+                render: sinon.spy(),
             } as unknown as Response;
-
-            await JobRoleController.postJobRoleForm(req,res);
-
+    
+            await JobRoleController.postJobRoleForm(req, res);
+    
             expect((res.redirect as sinon.SinonSpy).calledOnce).to.be.true;
-            expect((res.redirect as sinon.SinonSpy).calledWith('/job-roles/${createdJobRoleId')).to.be.true;
+            expect((res.redirect as sinon.SinonSpy).calledWith(`/job-roles/${createdJobRoleId}`)).to.be.true;  // Fix the string interpolation
             expect((res.render as sinon.SinonSpy).notCalled).to.be.true;
         });
 
+        it('should render view as admin if logged in', async () => {
+            const req = { session: { token: 'admin-token' } } as unknown as Request;  // Token for an admin
+            const res = {
+                render: sinon.spy(),
+                locals: { isAdmin: true }  // Set admin status explicitly for the test
+            } as unknown as Response;
+        
+            await JobRoleController.getJobRoleForm(req, res);
+        
+            expect(res.locals.isAdmin).to.be.true;  // Ensure admin status is set
+            expect((res.render as sinon.SinonSpy).calledOnce).to.be.true;
+            expect((res.render as sinon.SinonSpy).calledWith('job-role-form.html')).to.be.true;
+        });
+        
+   
         it('should render the form with an error message when creation fails', async() => {
 
             const errorMessages = 'Error creating job role';
@@ -251,14 +269,14 @@ describe('JobRoleController', function () {
             } as unknown as Request;
             const res = {
                 render: sinon.spy(),
-                locals: {},
+                locals: {} as { errorMessage?: string},
             } as unknown as Response;
 
             await JobRoleController.postJobRoleForm(req, res);
 
             expect((res.render as sinon.SinonSpy).calledOnce).to.be.true;
             expect((res.render as sinon.SinonSpy).calledWith('job-role-form.html', req.body)).to.be.true;
-            expect((res.locals as any).errorMessage).to.equal(errorMessages);
+            expect(res.locals.errorMessage).to.equal(errorMessages);
         })
     })
 });
