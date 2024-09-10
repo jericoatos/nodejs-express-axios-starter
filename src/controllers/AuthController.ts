@@ -20,3 +20,7 @@ export const logout = async(req: express.Request, res: express.Response): Promis
     req.session.token = undefined;
     res.redirect('/loginForm');
 }
+
+export const getloginErrorMessage = async (req: express.Request, res: express.Response): Promise<void> => {
+    res.render('loginErrorMessage');
+}
