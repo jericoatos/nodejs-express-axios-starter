@@ -5,7 +5,8 @@
     "linter": "npx eslint .",
     "test": "mocha --require ts-node/register test/unit/**/*.ts",
     "test-ui": "mocha --require ts-node/register --timeout 10000 test/ui/**/*.ts",
-    "build": "tsc --build"
+    "build": "tsc --build",
+    "preinstall": "npm set audit false"
   },
   "keywords": [],
   "author": "Shaun Ganley <shaung@kainos.com>",
