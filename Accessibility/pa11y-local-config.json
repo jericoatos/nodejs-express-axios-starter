@@ -1,8 +1,0 @@
-{
-    "urls": [
-        "http://localhost:3000",
-        "http://localhost:3000/job-roles"
-    ],
-    "standard": "WCAG2AA",
-    "timeout": 30000
-}

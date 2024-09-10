@@ -8,7 +8,7 @@ export const getLoginForm = async (req: express.Request, res: express.Response):
 
 export const postLoginForm = async (req: express.Request, res: express.Response): Promise<void> => {
     try {
-        // Assuming req.body is properly typed and matches expected shape
+        // Ensure req.body is properly typed
         req.session.token = await getAuthToken(req.body);
         res.redirect('/');
     } catch (error) {

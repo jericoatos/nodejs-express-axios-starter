@@ -1,21 +1,23 @@
 {
     "compilerOptions": {
-        "module": "Commonjs",
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "target": "es6",
-        "noImplicitAny": true,
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "outDir": "./dist"
+        "module": "ESNext",                          // Use ESNext to enable modern ES modules
+        "esModuleInterop": true,                     // Keep for better compatibility with CommonJS modules
+        "allowSyntheticDefaultImports": true,        // Allow default imports from modules without default exports
+        "target": "es2020",                          // Target a more modern version of ECMAScript
+        "noImplicitAny": true,                       // Enforces strict typing
+        "moduleResolution": "node",                  // Resolve modules the same way Node.js does
+        "sourceMap": true,                           // Keep source maps for debugging
+        "outDir": "./dist"                           // Output compiled files to the dist directory
     },
     "include": [
-        "src/**/*",
-        "test/**/*"
+        "src/**/*",                                  // Include all source files
+        "test/**/*"                                  // Include test files
     ],
     "exclude": [
-        "node_modules",
-        "dist"
+        "node_modules",                              // Exclude node_modules from compilation
+        "dist"                                       // Exclude dist directory from compilation
     ],
-    "ts-node": { "esm": true } 
+    "ts-node": {
+        "esm": true                                  // Enable ES module support in ts-node
+    }
 }
