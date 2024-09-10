@@ -80,4 +80,4 @@ app.get('/job-roles', getAllJobRoles);
 app.get('/job-role-form',allowRoles([UserRole.Admin]), getJobRoleForm);
 app.post('/job-role-form',allowRoles([UserRole.Admin]), postJobRoleForm);
 app.get('/job-roles/:id', allowRoles([UserRole.Admin, UserRole.User]), getSingleJobRole);
-app.get('/error', getErrorMessage), allowRoles([UserRole.Admin, UserRole.User]);
+app.get('/error', getErrorMessage);
