@@ -9,9 +9,9 @@ describe('List of Job Roles', function () {
                 const driver = await new Builder().forBrowser("chrome").build();
                 try {
                     await driver.get('http://localhost:3000');
-                    await driver.sleep(1000);
+                    await driver.sleep(500);
                     await driver.findElement(By.id('careerslink')).click();
-                    await driver.sleep(1000);
+                    await driver.sleep(500);
 
                     const currentUrl = await driver.getCurrentUrl();
                     expect(currentUrl).to.equal('http://localhost:3000/job-roles');
@@ -27,9 +27,9 @@ describe('List of Job Roles', function () {
                 const driver = await new Builder().forBrowser("chrome").build();
                 try {
                     await driver.get('https://jd5pri3k2r.eu-west-1.awsapprunner.com');
-                    await driver.sleep(2000);
+                    await driver.sleep(500);
                     await driver.findElement(By.id('careerslink')).click();
-                    await driver.sleep(1000);
+                    await driver.sleep(500);
 
                     const currentUrl = await driver.getCurrentUrl();
                     expect(currentUrl).to.equal('https://jd5pri3k2r.eu-west-1.awsapprunner.com/job-roles');
