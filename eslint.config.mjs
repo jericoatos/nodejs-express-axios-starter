@@ -12,12 +12,23 @@ export default tseslint.config(
       // Disable the rule that disallows console statements
       "no-console": "off",
       // Ensure console is defined
-      "no-undef": "off"
+      "no-undef": "off",
+      // Disable the require-yield rule if not needed
+      "require-yield": "off",
+      // Ensure no var-requires rule is enforced
+      "@typescript-eslint/no-var-requires": "error",
+      // Additional TypeScript specific rules
+      "@typescript-eslint/explicit-module-boundary-types": "warn",
+      "@typescript-eslint/ban-ts-comment": "warn"
     },
     languageOptions: {
       globals: {
         console: "readonly"
-      }
+      },
+      parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: 'module',
+      },
     }
   }
 );
