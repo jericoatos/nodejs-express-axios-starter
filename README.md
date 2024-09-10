@@ -19,5 +19,7 @@
 
 ## How to Run Quiz
 
-1. Add OpenAI api key to .zshrc file
+1. Add OpenAI api key to .zshrc file:
+
+export "OPENAI_API_KEY"="<key>"
 
