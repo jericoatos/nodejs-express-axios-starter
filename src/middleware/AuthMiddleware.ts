@@ -5,8 +5,16 @@ import "core-js/stable/atob";
 
 export const setLoggedInStatus = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     res.locals.loggedin = !!req.session.token;
+
+    if(req.session.token){
+        const decodedToken: JwtToken = jwtDecode(req.session.token);
+
+        res.locals.isAdmin = decodedToken.Role == UserRole.Admin;
+    } else{
+        res.locals.isAdmin = false; //not logged in or not an admin e.g User
+    }
     next();
-}
+};
 
 export const allowRoles = (allowedRoles: UserRole[]) => {
     return (req: express.Request, res: express.Response, next: express.NextFunction) => {
