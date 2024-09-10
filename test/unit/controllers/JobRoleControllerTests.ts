@@ -6,6 +6,7 @@ import { expect } from 'chai';
 import { Request, Response } from "express";
 import { describe, afterEach, it } from "node:test";
 import { JobRole } from '../../../src/models/JobRole';
+import { JobRoleRequest } from '../../../src/models/JobRoleRequest';
 
 const jobRoleResponse : JobRoleResponse = {
     jobRoleId: 2,
@@ -15,6 +16,33 @@ const jobRoleResponse : JobRoleResponse = {
     bandName: "Senior",
     closingDate: new Date(16930780000000)
 }
+
+const jobRole: JobRole = {
+    jobRoleId: 2,
+    roleName: "Software Engineer",
+    description: "Develops, tests, and maintains software applications.",
+    responsibilities: "Design, develop, and maintain software applications, collaborate with other engineers, perform code reviews.",
+    sharepointUrl: "https://sharepoint.com/job/software-engineer",
+    location: "New York",
+    capabilityName: "Software Development",
+    bandName: "Junior",
+    closingDate: "Sun Sep 15 2024",
+    statusName: "Open",
+    numberOfOpenPositions: 3
+};
+
+const jobRolerequest: JobRoleRequest = {
+    roleName: "Software Engineer",
+  description: "Develops, tests, and maintains software applications.",
+  sharepointUrl: "https://sharepoint.com/job/software-engineer",
+  responsibilities: "Design, develop, and maintain software applications, collaborate with other engineers, perform code reviews.",
+  numberOfOpenPositions: 3,
+  location: "New York",
+  closingDate: new Date().toISOString(),
+  bandId: 1,
+  capabilityId: 1,
+  statusName: 'Open'
+};
 
 describe('JobRoleController', function () {
     afterEach(() => {
@@ -61,19 +89,6 @@ describe('JobRoleController', function () {
 })
 
 
-const jobRole: JobRole = {
-    jobRoleId: 2,
-    roleName: "Software Engineer",
-    description: "Develops, tests, and maintains software applications.",
-    responsibilities: "Design, develop, and maintain software applications, collaborate with other engineers, perform code reviews.",
-    sharepointUrl: "https://sharepoint.com/job/software-engineer",
-    location: "New York",
-    capabilityName: "Software Development",
-    bandName: "Junior",
-    closingDate: "Sun Sep 15 2024",
-    statusName: "Open",
-    numberOfOpenPositions: 3
-};
 describe('JobRoleController', function () {
     afterEach(() => {
         sinon.restore();
@@ -110,10 +125,9 @@ describe('JobRoleController', function () {
         
             describe('getSingleJobRole', function () {
                 it('should return 404 and redirect to error page when job role is not found', async () => {
-                    // Stub the service call to return null
+                    
                     sinon.stub(JobRoleService, 'getJobRoleById').resolves(null);
                 
-                    // Mock request and response objects
                     const req = {
                         params: { id: "999" },
                         session: { token: 'test-token' }
@@ -175,7 +189,77 @@ describe('JobRoleController', function () {
                     expect(sendSpy.notCalled).to.be.true;
                 });                
             });
+        });  
+    });
+
+    describe('getErrorMessage', function () {
+        it('should render error view', async() => {
+            const req = {} as Request;
+            const res = {
+                render: sinon.spy(),
+            } as unknown as Response;
+
+            await JobRoleController.getErrorMessage(req,res);
+            expect((res.render as sinon.SinonSpy).calledOnce).to.be.true;
+            expect((res.render as sinon.SinonSpy).calledWith('error')).to.be.true;
+
         });
     });
+
+    describe('getJobRoleForm', function(){
+    it('should render the job role form view', async() => {
+        const req = {} as Request;
+        const res = {
+            render: sinon.spy(),
+        } as unknown as Response;
+
+        await JobRoleController.getJobRoleForm(req,res);
+
+        expect((res.render as sinon.SinonSpy).calledOnce).to.be.true;
+        expect((res.render as sinon.SinonSpy).calledWith('job-role-form.html')).to.be.true;
+    });
+    });
+
+    describe('postJobRoleForm', function(){
+        it('should redirect to the jobrole page when the job role is created successfully', async() => {
+
+            const createdJobRoleId = 12;
+            sinon.stub(JobRoleService, 'createJobRole').resolves(createdJobRoleId);
+
+            const req = {
+                body: jobRolerequest
+            } as unknown as Request;
+            const res = {
+                redirect: sinon.spy(),
+                render: sinon.spy,
+            } as unknown as Response;
+
+            await JobRoleController.postJobRoleForm(req,res);
+
+            expect((res.redirect as sinon.SinonSpy).calledOnce).to.be.true;
+            expect((res.redirect as sinon.SinonSpy).calledWith('/job-roles/${createdJobRoleId')).to.be.true;
+            expect((res.render as sinon.SinonSpy).notCalled).to.be.true;
+        });
+
+        it('should render the form with an error message when creation fails', async() => {
+
+            const errorMessages = 'Error creating job role';
+            sinon.stub(JobRoleService, 'createJobRole').rejects(new Error(errorMessages));
+
+            const req = {
+                body: jobRolerequest,
+            } as unknown as Request;
+            const res = {
+                render: sinon.spy(),
+                locals: {},
+            } as unknown as Response;
+
+            await JobRoleController.postJobRoleForm(req, res);
+
+            expect((res.render as sinon.SinonSpy).calledOnce).to.be.true;
+            expect((res.render as sinon.SinonSpy).calledWith('job-role-form.html', req.body)).to.be.true;
+            expect((res.locals as any).errorMessage).to.equal(errorMessages);
+        })
+    })
 });
 

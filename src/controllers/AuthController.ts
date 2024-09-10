@@ -24,3 +24,7 @@ export const logout = async(req: express.Request, res: express.Response): Promis
 export const getloginErrorMessage = async (req: express.Request, res: express.Response): Promise<void> => {
     res.render('loginErrorMessage');
 }
+
+export const getNonAuthorizedMessage = async (req: express.Request, res: express.Response): Promise<void> => {
+    res.render('nonAuthorizedError');
+}

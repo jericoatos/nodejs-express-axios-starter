@@ -5,8 +5,8 @@ export type JobRoleRequest = {
     responsibilities: string,
     sharepointUrl: string,
     location: string,
-    capabilityName: string,
-    bandName: string,
+    capabilityId: number,
+    bandId: number,
     closingDate: string,
     statusName: 'Open',
     numberOfOpenPositions: number

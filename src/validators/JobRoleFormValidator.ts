@@ -1,6 +1,6 @@
 import { JobRoleRequest } from './../models/JobRoleRequest';
 
-// Validate the job role form data
+
 export const validateJobRoleForm = function (jobRole: JobRoleRequest): void {
     if (!jobRole.roleName) {
         throw new Error("Job Role Name is required.");
@@ -13,10 +13,20 @@ export const validateJobRoleForm = function (jobRole: JobRoleRequest): void {
     if(jobRole.roleName.length < 5){
         throw new Error('Job Role name is too short.');
     }
+    const roleNamePattern = /^[A-Za-z\s]+$/; 
+    if (!roleNamePattern.test(jobRole.roleName)) {
+        throw new Error('Job Role name can only contain letters and spaces.');
+    }
 
     if (!jobRole.description) {
         throw new Error("Job Spec Summary is required.");
     }
+    const descriptionPattern = /^[A-Za-z\s.,!?'""-]+$/; 
+
+    if (!descriptionPattern.test(jobRole.description)) {
+    throw new Error('Job Spec Summary can only contain letters, spaces, full stops, commas, exclamation marks, question marks, and quotation marks.');
+    } 
+   
 
     if (!jobRole.sharepointUrl || !validateUrl(jobRole.sharepointUrl)) {
         throw new Error("Sharepoint Link must be a valid URL.");
@@ -24,30 +34,48 @@ export const validateJobRoleForm = function (jobRole: JobRoleRequest): void {
 
     if (!jobRole.responsibilities) {
         throw new Error("Responsibilities are required.");
+    } 
+    const responsibilitiesPattern = /^[A-Za-z\s.,!?'""-]+$/; 
+
+    if (!responsibilitiesPattern.test(jobRole.responsibilities)) {
+    throw new Error('Responsibilities can only contain letters, spaces, full stops, commas, exclamation marks, question marks, and quotation marks.');
+    }   
+ 
+
+    if (isNaN(jobRole.numberOfOpenPositions)) {
+        throw new Error("Number of Open Positions must be a valid number.");
     }
 
-    if (isNaN(jobRole.numberOfOpenPositions) || jobRole.numberOfOpenPositions <= 0) {
-        throw new Error("Number of Open Positions must be a positive integer.");
+    if (jobRole.numberOfOpenPositions <= 0) {
+        throw new Error("Number of Open Positions must be greater than 0.");
     }
 
     if (!jobRole.location) {
         throw new Error("Location is required.");
     }
+    const locationpattern = /^[A-Za-z\s]+$/; 
+    if (!locationpattern.test(jobRole.location)) {
+        throw new Error('Job Role location can only contain letters and spaces.');
+    }
 
-    //make sure you cant eneter a date thats already passed
+    //make sure you cant enter a date thats already passed
     if (!jobRole.closingDate) {
         throw new Error("Closing date is required.");
     }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to the start of today
 
-   // if (!validateDate(jobRole.closingDate)) {
-     //   throw new Error("Closing Date must be in the format 'DayName Day Month Year' (e.g., 'Monday 9 September 2024').");
-   // }
+    const closingDate = new Date(jobRole.closingDate);
 
-    if (!jobRole.bandName) {
+    if (closingDate < today) {
+        throw new Error("Closing date cannot be in the past.");
+    }
+
+    if (!jobRole.bandId) {
         throw new Error("Band Name is required.");
     }
 
-    if (!jobRole.capabilityName) {
+    if (!jobRole.capabilityId) {
         throw new Error("Capability Name is required.");
     }
 };
@@ -61,49 +89,4 @@ export const validateUrl = function (url: string): boolean {
         return false;
     }
 };
-/*
-// Validate the human-readable date format
-export const validateDate = function (date: string): boolean {
-    const [dayName, day, month, year] = date.split(' ');
 
-    // Basic checks for format
-    if (!dayName || !day || !month || !year) {
-        return false;
-    }
-
-    const dayNumber = parseInt(day);
-    const yearNumber = parseInt(year);
-
-    // Validate day and year are numbers
-    if (isNaN(dayNumber) || isNaN(yearNumber)) {
-        return false;
-    }
-
-    // Check month name validity
-    const months = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    if (!months.includes(month)) {
-        return false;
-    }
-
-    // Check day and year are reasonable
-    const monthIndex = months.indexOf(month);
-    const dateForParsing = new Date(yearNumber, monthIndex, dayNumber);
-    if (dateForParsing.getFullYear() !== yearNumber ||
-        dateForParsing.getMonth() !== monthIndex ||
-        dateForParsing.getDate() !== dayNumber) {
-        return false;
-    }
-
-    // Additional check for day name
-    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const expectedDayName = dayNames[dateForParsing.getDay()];
-    if (dayName !== expectedDayName) {
-        return false;
-    }
-
-    return true;
-};
-*/
