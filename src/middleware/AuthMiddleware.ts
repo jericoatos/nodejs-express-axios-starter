@@ -11,7 +11,7 @@ export const setLoggedInStatus = (req: express.Request, res: express.Response, n
 
         res.locals.isAdmin = decodedToken.Role == UserRole.Admin;
     } else{
-        res.locals.isAdmin = false; //not logged in or not an admin e.g User
+        res.locals.isAdmin = false; 
     }
     next();
 };
@@ -24,7 +24,6 @@ export const allowRoles = (allowedRoles: UserRole[]) => {
 
         const decodedToken: JwtToken = jwtDecode(req.session.token);
         if (!allowedRoles.includes(decodedToken.Role)) {
-            //return res.status(403).send('User role not authorised for this action');
             return res.status(403).redirect('/nonAuthorizedError');
         }
 

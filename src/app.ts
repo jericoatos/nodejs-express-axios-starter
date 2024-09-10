@@ -77,8 +77,6 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 
 
 app.get('/job-roles', getAllJobRoles);
-//app.get('/job-roles/:id', getSingleJobRole);
-//app.post('/job-roles',postJobRoleForm);
 app.get('/job-role-form',allowRoles([UserRole.Admin]), getJobRoleForm);
 app.post('/job-role-form',allowRoles([UserRole.Admin]), postJobRoleForm);
 app.get('/job-roles/:id', allowRoles([UserRole.Admin, UserRole.User]), getSingleJobRole);

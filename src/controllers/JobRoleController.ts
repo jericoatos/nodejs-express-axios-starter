@@ -38,9 +38,9 @@ export const getJobRoleForm = async (req:express.Request, res:express.Response):
 export const postJobRoleForm = async(req: express.Request, res: express.Response): Promise<void> => {
     try{
         const id = await createJobRole(req.body);
-        res.redirect('/job-roles/'+ id); //changed from regular id, jobroles
+        res.redirect('/job-roles/'+ id); 
     }catch(error) {
-    //console.error("Error creating job role:", error);
+    
        res.locals.errorMessage = error.message;
        res.render('job-role-form.html', req.body);
         

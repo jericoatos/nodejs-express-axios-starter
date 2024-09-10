@@ -1,5 +1,4 @@
 export type JobRoleRequest = {
-    //jobRoleId: number,
     roleName: string,
     description: string,
     responsibilities: string,

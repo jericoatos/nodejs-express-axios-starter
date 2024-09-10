@@ -27,7 +27,6 @@ export const getJobRoleById = async (id: string, token: string): Promise<JobRole
         
         return response.data;
     } catch(e){
-        console.log(e);
         throw new Error('failed to get JobRole information');
     }
 }
@@ -36,7 +35,7 @@ export const createJobRole = async(jobRole: JobRoleRequest): Promise<number> => 
     validateJobRoleForm(jobRole);
     try{
 
-        const response: AxiosResponse = await axios.post('http://localhost:8080/api/job-roles', jobRole);
+        const response: AxiosResponse = await axios.post(URL, jobRole);
 
         return response.data;
     }catch(e){
