@@ -125,11 +125,11 @@
 
             const data = await response.json();
 
-            // Display the job role result
+            
             const jobResult = data.choices[0].message.content.trim();
             sessionStorage.setItem('jobRole', jobResult);
             window.location.href = '/resultJob';
-            // You can also display this result on the page instead of an alert
+            
         } catch (error) {
             console.error('Error fetching job role:', error);
             alert('Failed to fetch the job role. Please try again.');
