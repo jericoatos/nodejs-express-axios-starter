@@ -10,11 +10,12 @@
         "outDir": "./dist"
     },
     "include": [
-        "src/**/*", "test"
-, "dist/app.js"        
+        "src/**/*",
+        "test/**/*"
     ],
     "exclude": [
-        "./node_modules/**/*",
-        "./dist/**/*"
-    ]
+        "node_modules",
+        "dist"
+    ],
+    "ts-node": { "esm": true } 
 }
