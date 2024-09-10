@@ -57,24 +57,29 @@
     };
 
     function displayAnswers() {
-        const answersContainer = document.getElementById('answersContainer');
-        let htmlContent = '';
+    const answersContainer = document.getElementById('answersContainer');
+    let htmlContent = '';
 
-        // Loop through the questions and answers
-        for (let i = 0; i < questions.length; i++) {
-            const answerKey = 'question' + (i + 1);
-            const answer = localStorage.getItem(answerKey);
-            const answerText = answerLabels[answer] || 'No answer selected';
+    // Loop through the questions and answers
+    for (let i = 0; i < questions.length; i++) {
+        const answerKey = 'question' + (i + 1);
+        const answer = localStorage.getItem(answerKey);
+        const answerText = answerLabels[answer] || 'No answer selected';
 
-            htmlContent += `<h4>Question ${i + 1}:</h4>`;
-            htmlContent += `<p>${questions[i]}</p>`;
-            htmlContent += `<p><strong>Answer:</strong> ${answerText}</p>`;
-            htmlContent += '<hr>';
+        // Create a URL with a query parameter to redirect to the specific question on the /quiz page
+        const changeAnswerUrl = `/quiz?question=${i + 1}`;
 
-        }
-
-        answersContainer.innerHTML = htmlContent;
+        htmlContent += `<h4>Question ${i + 1}:</h4>`;
+        htmlContent += `<p>${questions[i]}</p>`;
+        htmlContent += `<p><strong>Answer:</strong> ${answerText}</p>`;
+        htmlContent += `<a href="${changeAnswerUrl}" class="btn btn-primary btn-sm">Change Answer</a>`;
+        htmlContent += '<hr>';
     }
+
+    answersContainer.innerHTML = htmlContent;
+}
+
+
 
     document.addEventListener('DOMContentLoaded', displayAnswers);
 

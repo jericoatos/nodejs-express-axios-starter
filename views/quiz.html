@@ -24,9 +24,6 @@
 
 <script>
 
-localStorage.clear();
-sessionStorage.clear();
-
     let currentQuestionIndex = 0;
     const questions = [
         'questionOne',
@@ -37,34 +34,45 @@ sessionStorage.clear();
     ];
 
     function loadQuestion(index) {
-        if (index >= 0 && index < questions.length) {
-            fetch(questions[index])
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('questionContainer').innerHTML = data;
-                    // Show or hide the back button based on the current question index
-                    document.getElementById('backButton').style.display = index > 0 ? 'inline-block' : 'none';
-                })
-                .catch(error => console.error('Error loading question:', error));
-        }
-    }
+    if (index >= 0 && index < questions.length) {
+        fetch(questions[index])
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('questionContainer').innerHTML = data;
 
-    function saveAnswer() {
-        const selectedAnswer = document.querySelector('input[id="answer"]:checked');
-        const errorContainer = document.getElementById('error-container');
-        if (selectedAnswer) {
-            clearError();
-            localStorage.setItem('question' + (currentQuestionIndex + 1), selectedAnswer.value);
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                loadQuestion(currentQuestionIndex);
-            } else {
-                window.location.href = '/checkAnswers';
-            }
-        } else {
-            showError("Please select an answer."); // Display the error message above the question
-        }
+                // Pre-select the saved answer if it exists
+                const savedAnswer = localStorage.getItem('question' + (index + 1));
+                if (savedAnswer) {
+                    const answerInput = document.querySelector(`input[id="answer"][value="${savedAnswer}"]`);
+                    if (answerInput) {
+                        answerInput.checked = true;
+                    }
+                }
+
+                // Show or hide the back button based on the current question index
+                document.getElementById('backButton').style.display = index > 0 ? 'inline-block' : 'none';
+            })
+            .catch(error => console.error('Error loading question:', error));
     }
+}
+
+function saveAnswer() {
+    const selectedAnswer = document.querySelector('input[id="answer"]:checked');
+    const errorContainer = document.getElementById('error-container');
+    if (selectedAnswer) {
+        clearError();
+        localStorage.setItem('question' + (currentQuestionIndex + 1), selectedAnswer.value);
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion(currentQuestionIndex);
+        } else {
+            window.location.href = '/checkAnswers';
+        }
+    } else {
+        showError("Please select an answer."); // Display the error message above the question
+    }
+}
+
 
     function showError(message) {
         const errorContainer = document.getElementById('error-container');
@@ -91,6 +99,11 @@ sessionStorage.clear();
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const questionParam = urlParams.get('question');
+        if (questionParam) {
+            currentQuestionIndex = parseInt(questionParam) - 1; // Adjust index based on query parameter
+        }
         loadQuestion(currentQuestionIndex);
     });
 </script>
