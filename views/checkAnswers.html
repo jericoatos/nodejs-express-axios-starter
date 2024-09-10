@@ -60,13 +60,11 @@
     const answersContainer = document.getElementById('answersContainer');
     let htmlContent = '';
 
-    // Loop through the questions and answers
     for (let i = 0; i < questions.length; i++) {
         const answerKey = 'question' + (i + 1);
         const answer = localStorage.getItem(answerKey);
         const answerText = answerLabels[answer] || 'No answer selected';
 
-        // Create a URL with a query parameter to redirect to the specific question on the /quiz page
         const changeAnswerUrl = `/quiz?question=${i + 1}`;
 
         htmlContent += `<h4>Question ${i + 1}:</h4>`;

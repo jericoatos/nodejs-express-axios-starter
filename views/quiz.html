@@ -11,7 +11,6 @@
     {% include "kainosHeader.html" %}
 
     <main class="container mt-5">
-
         <div id="error-container" class="text-danger mb-3" style="display: none;"></div>
         <div class="question-container" id="questionContainer">
             <!-- Question content will be loaded here -->
@@ -40,7 +39,6 @@
             .then(data => {
                 document.getElementById('questionContainer').innerHTML = data;
 
-                // Pre-select the saved answer if it exists
                 const savedAnswer = localStorage.getItem('question' + (index + 1));
                 if (savedAnswer) {
                     const answerInput = document.querySelector(`input[id="answer"][value="${savedAnswer}"]`);
@@ -48,8 +46,6 @@
                         answerInput.checked = true;
                     }
                 }
-
-                // Show or hide the back button based on the current question index
                 document.getElementById('backButton').style.display = index > 0 ? 'inline-block' : 'none';
             })
             .catch(error => console.error('Error loading question:', error));
@@ -69,7 +65,7 @@ function saveAnswer() {
             window.location.href = '/checkAnswers';
         }
     } else {
-        showError("Please select an answer."); // Display the error message above the question
+        showError("Please select an answer.");
     }
 }
 
@@ -78,7 +74,7 @@ function saveAnswer() {
         const errorContainer = document.getElementById('error-container');
         if (errorContainer) {
             errorContainer.textContent = message;
-            errorContainer.style.display = 'block'; // Show the error container
+            errorContainer.style.display = 'block';
         }
     }
 
@@ -86,12 +82,11 @@ function saveAnswer() {
         const errorContainer = document.getElementById('error-container');
         if (errorContainer) {
             errorContainer.textContent = '';
-            errorContainer.style.display = 'none'; // Hide the error container
+            errorContainer.style.display = 'none';
         }
     }
 
     function goBack() {
-        // Decrement the question index and load the previous question
         if (currentQuestionIndex > 0) {
             currentQuestionIndex--;
             loadQuestion(currentQuestionIndex);
@@ -102,7 +97,7 @@ function saveAnswer() {
         const urlParams = new URLSearchParams(window.location.search);
         const questionParam = urlParams.get('question');
         if (questionParam) {
-            currentQuestionIndex = parseInt(questionParam) - 1; // Adjust index based on query parameter
+            currentQuestionIndex = parseInt(questionParam) - 1;
         }
         loadQuestion(currentQuestionIndex);
     });
