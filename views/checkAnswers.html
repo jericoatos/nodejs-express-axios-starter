@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Check Answers</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/style/styles.css">
+    <link rel="icon" type="image/x-icon" id="companieslogo"
+        href="https://companieslogo.com/img/orig/KNOS.L-8a0d29cc.png?t=1720244492">
+</head>
+
+<body>
+    {% include "kainosHeader.html" %}
+
+    <main class="container mt-5">
+        <h1 class="mb-4">Check Your Answers</h1>
+        <div id="answersContainer">
+            <!-- Questions and answers will be populated here -->
+        </div>
+        <button type="button" onclick="submitAnswers()">Submit Answers</button>
+        <br>
+        <br>
+    </main>
+
+    <div id="api" data-total-pages="{{apiKey}}"></div>
+ 
+    {% include "kainosFooter.html" %}
+</body>
+
+</html>
+
+<script>
+    const questions = [
+        "Do you enjoy writing and maintaining code as a primary part of your job?",
+        "Are you comfortable leading and guiding a team through complex technical decisions?",
+        "Do you have experience in designing and implementing software testing strategies?",
+        "Are you interested in understanding and translating customer needs into technical requirements?",
+        "Do you have experience designing large-scale software architectures and making high-level technical decisions?"
+    ];
+
+    const answerLabels = {
+        "likes-maintaining-code-as-primary-part-of-job": "Yes",
+        "does-not-like-maintaining-code-as-primary-part-of-job": "No",
+        "not-sure-if-likes-maintaining-code-as-primary-part-of-job": "Not sure",
+        "likes-leading-team-through-decisions": "Yes",
+        "does-not-like-leading-team-through-decisions": "No",
+        "not-sure-if-leading-team-through-decisions": "Not sure",
+        "has-experience-designing-implementing-software-testing": "Yes",
+        "does-not-have-experience-designing-implementing-software-testing": "No",
+        "interested-understanding-translating-customer-needs": "Yes",
+        "not-interested-understanding-translating-customer-needs": "No",
+        "not-sure-if-interested-understanding-translating-customer-needs": "Not sure",
+        "experience-designing-large-scale-software-architecture-and-technical-decisions": "Yes",
+        "no-experience-designing-large-scale-software-architecture-and-technical-decisions": "No"
+    };
+
+    function displayAnswers() {
+    const answersContainer = document.getElementById('answersContainer');
+    let htmlContent = '';
+
+    for (let i = 0; i < questions.length; i++) {
+        const answerKey = 'question' + (i + 1);
+        const answer = localStorage.getItem(answerKey);
+        const answerText = answerLabels[answer] || 'No answer selected';
+
+        const changeAnswerUrl = `/quiz?question=${i + 1}`;
+
+        htmlContent += `<h4>Question ${i + 1}:</h4>`;
+        htmlContent += `<p>${questions[i]}</p>`;
+        htmlContent += `<p><strong>Answer:</strong> ${answerText}</p>`;
+        htmlContent += `<a href="${changeAnswerUrl}" class="btn btn-primary btn-sm">Change Answer</a>`;
+        htmlContent += '<hr>';
+    }
+
+    answersContainer.innerHTML = htmlContent;
+}
+
+
+
+    document.addEventListener('DOMContentLoaded', displayAnswers);
+
+    async function submitAnswers() {
+        const answers = [];
+
+        // Retrieve answers from localStorage
+        for (let i = 1; i <= 5; i++) {
+            const answerKey = 'question' + i;
+            const answer = localStorage.getItem(answerKey);
+            answers.push(answer);
+        }
+
+        // Define the prompt for OpenAI API
+        const prompt = `
+            Based on the following answers, determine the best-suited job for the person:
+            1. Do you enjoy writing and maintaining code as a primary part of your job? Answer: ${answers[0]}
+            2. Are you comfortable leading and guiding a team through complex technical decisions? Answer: ${answers[1]}
+            3. Do you have experience in designing and implementing software testing strategies? Answer: ${answers[2]}
+            4. Are you interested in understanding and translating customer needs into technical requirements? Answer: ${answers[3]}
+            5. Do you have experience designing large-scale software architectures and making high-level technical decisions? Answer: ${answers[4]}
+
+            Possible roles:
+            - Front-end Engineer
+            - Software Engineer
+            - Test Engineer
+            - Senior Product Specialist
+            - Principal Architect
+
+            Only return the job title that best matches the answers.`;
+
+        // Send request to OpenAI API
+        try {
+            const importedKey = document.getElementById('api').getAttribute('data-total-pages');
+
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${importedKey}`,
+                },
+                body: JSON.stringify({
+                    model: 'gpt-3.5-turbo', 
+                    messages: [{ role: 'user', content: prompt }],
+                    max_tokens: 50, 
+                }),
+            });
+
+            const data = await response.json();
+
+            
+            const jobResult = data.choices[0].message.content.trim();
+            sessionStorage.setItem('jobRole', jobResult);
+            window.location.href = '/resultJob';
+            
+        } catch (error) {
+            console.error('Error fetching job role:', error);
+            alert('Failed to fetch the job role. Please try again.');
+        }
+    }
+
+</script>

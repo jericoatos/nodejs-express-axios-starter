@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Role Information</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/style/styles.css">
+    <link rel="icon" type="image/x-icon" id="companieslogo" href="https://companieslogo.com/img/orig/KNOS.L-8a0d29cc.png?t=1720244492">
+</head>
+<body>
+    {% include "kainosHeader.html" %}
+
+    <main class="container mt-5">
+        <h1 class="mb-4">Quiz Completed</h1>
+        <div id="resultsContainer" class="bg-white rounded shadow-sm"></div>
+        <!-- The results will be shown here -->
+    </main>
+    {% include "kainosFooter.html" %}
+    
+    <script>
+        const jobRole = sessionStorage.getItem('jobRole');
+        const resultsContainer = document.getElementById('resultsContainer');
+        if (jobRole) {
+            resultsContainer.innerHTML = `<h3>${jobRole}</h3>`;
+        } else {
+            resultsContainer.innerHTML = `<p>No job role found. Please complete the quiz to get your recommendation.</p>`;
+        }
+    </script>
+</body>
+</html>

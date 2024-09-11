@@ -6,6 +6,9 @@ COPY . /code
  
 ARG API_URL
 ENV API_URL=${API_URL}
+
+ARG OPENAI_API_KEY
+ENV OPENAI_API_KEY=${OPENAI_API_KEY}
  
 RUN npm install
 RUN npm run build
