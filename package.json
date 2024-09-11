@@ -2,6 +2,7 @@
   "scripts": {
     "start": "tsc && node dist/src/app.js",
     "dev": "nodemon src/app.ts",
+    "lint": "eslint .",
     "linter": "npx eslint .",
     "test": "mocha --require ts-node/register test/unit/**/*.ts",
     "test-ui": "mocha --require ts-node/register --timeout 10000 test/ui/**/*.ts",
