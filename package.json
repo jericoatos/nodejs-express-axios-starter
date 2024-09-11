@@ -4,7 +4,7 @@
     "dev": "nodemon src/app.ts",
     "lint": "eslint .",
     "linter": "npx eslint .",
-    "test": "mocha --require ts-node/register test/unit/**/*.ts",
+    "test": "mocha --loader ts-node/esm --extensions ts test/**/*.ts",
     "test-ui": "mocha --require ts-node/register --timeout 10000 test/ui/**/*.ts",
     "build": "tsc --build",
     "test-aws": "pa11y-ci --config Accessibility/pa11y-aws-config.json",
