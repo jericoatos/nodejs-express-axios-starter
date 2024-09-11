@@ -1,4 +1,4 @@
-import sinon, { SinonSpy } from 'sinon';
+import sinon, { } from 'sinon';
 import { JobRoleResponse } from "../../../src/models/JobRoleResponse";
 import * as JobRoleService from "../../../src/services/JobRoleService";
 import * as JobRoleController from "../../../src/controllers/JobRoleController";
@@ -7,8 +7,7 @@ import { Request, Response } from "express";
 import { describe, afterEach, it } from "node:test";
 import { JobRole } from '../../../src/models/JobRole';
 import { JobRoleRequest } from '../../../src/models/JobRoleRequest';
-import { validateJobRoleForm } from '../../../src/validators/JobRoleFormValidator';
-import axios, { AxiosResponse } from 'axios';
+
 
 const jobRoleResponse : JobRoleResponse = {
     jobRoleId: 2,
@@ -46,7 +45,7 @@ const jobRolerequest: JobRoleRequest = {
   statusName: 'Open'
 };
 
-const token = 'test-token';  // Simulating a token
+  
 
     afterEach(() => {
         sinon.restore();  // Restore original functionality after each test
