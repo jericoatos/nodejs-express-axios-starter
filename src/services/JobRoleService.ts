@@ -32,13 +32,13 @@ export const getJobRoleById = async (id: string, token: string): Promise<JobRole
     }
 }
 
-export const createJobRole = async(jobRole: JobRoleRequest): Promise<number> => {
+export const createJobRole = async(jobRole: JobRoleRequest, token: string): Promise<number> => {
     
     validateJobRoleForm(jobRole);
     
     try{
 
-        const response: AxiosResponse = await axios.post(URL, jobRole); //issue with validator?
+        const response: AxiosResponse = await axios.post(URL, jobRole, getHeader(token)); 
 
         return response.data;
     }catch(e){

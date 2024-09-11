@@ -44,6 +44,7 @@ const jobRoleRequest: JobRoleRequest = {
   statusName: 'Open'
 };
 
+
 describe('JobRoleService', function () {
     const token = 'test-token';
 
@@ -122,7 +123,7 @@ describe('JobRoleService', function () {
           const responseId = 12; 
           mock.onPost('http://localhost:8080/api/job-roles', jobRoleRequest).reply(200, responseId);
 
-          const result = await createJobRole(jobRoleRequest);
+          const result = await createJobRole(jobRoleRequest, token);
 
           expect(result).to.equal(responseId);
       });
@@ -142,7 +143,7 @@ describe('JobRoleService', function () {
           };
 
           try {
-              await createJobRole(invalidJobRoleRequest);
+              await createJobRole(invalidJobRoleRequest, token);
           } catch (e) {
               expect(e.message).to.equal("Job Role Name is required."); 
               return;
@@ -156,7 +157,7 @@ describe('JobRoleService', function () {
         mock.onPost('http://localhost:8080/api/job-roles', jobRoleRequest).reply(400, "Bad request");
 
         try {
-            await createJobRole(jobRoleRequest);
+            await createJobRole(jobRoleRequest, token);
         } catch (e) {
             expect(e.message).to.equal('Bad request');
             return;
@@ -170,7 +171,7 @@ describe('JobRoleService', function () {
           mock.onPost('http://localhost:8080/api/job-roles', jobRoleRequest).reply(500, "Server error");
 
           try {
-              await createJobRole(jobRoleRequest);
+              await createJobRole(jobRoleRequest, token);
           } catch (e) {
               expect(e.message).to.equal('Server error');
               return;
