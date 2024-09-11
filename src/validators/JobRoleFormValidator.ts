@@ -85,7 +85,7 @@ export const validateJobRoleForm = function (jobRole: JobRoleRequest): void {
     if (!jobRole.location) {
         throw new Error("Location is required.");
     }
-    
+
     const locationpattern = /^[A-Za-z\s]+$/; 
     if (!locationpattern.test(jobRole.location)) {
         throw new Error('Job Role location can only contain letters and spaces.');
@@ -116,7 +116,7 @@ export const validateJobRoleForm = function (jobRole: JobRoleRequest): void {
 // Validate a URL
 export const validateUrl = function (url: string): boolean {
     try {
-        const parsedUrl = new URL(url);
+        
 
         // Check if the URL contains multiple protocols (e.g., "http://http://")
         const protocolPattern = /^(http:\/\/|https:\/\/)/i;
