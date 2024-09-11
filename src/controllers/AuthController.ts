@@ -25,6 +25,6 @@ export const logout = async (req: express.Request, res: express.Response): Promi
 };
 
 // Renamed function to follow camel case consistently
-export const getLoginErrorMessage = async (req: express.Request, res: express.Response): Promise<void> => {
+export const getloginErrorMessage = async (req: express.Request, res: express.Response): Promise<void> => {
     res.render('loginErrorMessage');
 };
