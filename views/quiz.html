@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/style/styles.css">
+    <link rel="icon" type="image/x-icon" id="companieslogo" href="https://companieslogo.com/img/orig/KNOS.L-8a0d29cc.png?t=1720244492">
+</head>
+<body>
+    {% include "kainosHeader.html" %}
+
+    <main class="container mt-5">
+        <div id="error-container" class="text-danger mb-3" style="display: none;"></div>
+        <div class="question-container" id="questionContainer">
+            <!-- Question content will be loaded here -->
+        </div>
+    </main>
+
+    {% include "kainosFooter.html" %}
+</body>
+</html>
+
+<script>
+
+    let currentQuestionIndex = 0;
+    const questions = [
+        'questionOne',
+        'questionTwo',
+        'questionThree',
+        'questionFour',
+        'questionFive',
+    ];
+
+    function loadQuestion(index) {
+    if (index >= 0 && index < questions.length) {
+        fetch(questions[index])
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('questionContainer').innerHTML = data;
+
+                const savedAnswer = localStorage.getItem('question' + (index + 1));
+                if (savedAnswer) {
+                    const answerInput = document.querySelector(`input[id="answer"][value="${savedAnswer}"]`);
+                    if (answerInput) {
+                        answerInput.checked = true;
+                    }
+                }
+                document.getElementById('backButton').style.display = index > 0 ? 'inline-block' : 'none';
+            })
+            .catch(error => console.error('Error loading question:', error));
+    }
+}
+
+function saveAnswer() {
+    const selectedAnswer = document.querySelector('input[id="answer"]:checked');
+    const errorContainer = document.getElementById('error-container');
+    if (selectedAnswer) {
+        clearError();
+        localStorage.setItem('question' + (currentQuestionIndex + 1), selectedAnswer.value);
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion(currentQuestionIndex);
+        } else {
+            window.location.href = '/checkAnswers';
+        }
+    } else {
+        showError("Please select an answer.");
+    }
+}
+
+
+    function showError(message) {
+        const errorContainer = document.getElementById('error-container');
+        if (errorContainer) {
+            errorContainer.textContent = message;
+            errorContainer.style.display = 'block';
+        }
+    }
+
+    function clearError() {
+        const errorContainer = document.getElementById('error-container');
+        if (errorContainer) {
+            errorContainer.textContent = '';
+            errorContainer.style.display = 'none';
+        }
+    }
+
+    function goBack() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            loadQuestion(currentQuestionIndex);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const questionParam = urlParams.get('question');
+        if (questionParam) {
+            currentQuestionIndex = parseInt(questionParam) - 1;
+        }
+        loadQuestion(currentQuestionIndex);
+    });
+</script>
