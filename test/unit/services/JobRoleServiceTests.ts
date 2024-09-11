@@ -35,18 +35,37 @@ describe('JobRoleService', function () {
     const token = 'test-token';
 
     describe('getJobRoles', function () {
-        it('should return job roles from response', async () => {
+        it('should return Job Roles from response without ordering', async () => {
             const data = [jobRoleResponse];
+
             mock.onGet(URL).reply(200, data);
 
             const results = await getJobRoles(token);
 
+            expect(results[0].jobRoleId).to.equal(jobRoleResponse.jobRoleId);
             expect(results[0].roleName).to.equal(jobRoleResponse.roleName);
             expect(results[0].location).to.equal(jobRoleResponse.location);
             expect(results[0].capabilityName).to.equal(jobRoleResponse.capabilityName);
             expect(results[0].bandName).to.equal(jobRoleResponse.bandName);
-            expect(results[0].closingDate).to.equal(jobRoleResponse.closingDate.toISOString());
+            expect(new Date(results[0].closingDate).getTime()).to.equal(jobRoleResponse.closingDate.getTime());
         });
+
+        it('should return Job Roles from response with ordering', async () => {
+            const data = [jobRoleResponse];
+            const params = { orderBy: 'roleName', direction: 'ASC' };
+
+            mock.onGet(URL, { params }).reply(200, data);
+
+            const results = await getJobRoles(token, 'roleName', 'ASC');
+
+            expect(results[0].jobRoleId).to.equal(jobRoleResponse.jobRoleId);
+            expect(results[0].roleName).to.equal(jobRoleResponse.roleName);
+            expect(results[0].location).to.equal(jobRoleResponse.location);
+            expect(results[0].capabilityName).to.equal(jobRoleResponse.capabilityName);
+            expect(results[0].bandName).to.equal(jobRoleResponse.bandName);
+            expect(new Date(results[0].closingDate).getTime()).to.equal(jobRoleResponse.closingDate.getTime());
+        });
+
 
         it('should throw exception when 500 error returned from axios', async () => {
             mock.onGet(URL).reply(500);

@@ -36,7 +36,7 @@ describe('JobRoleController', function () {
             await JobRoleController.getAllJobRoles(req as Request, res as Response);
 
             expect((res.render as sinon.SinonSpy).calledOnce).to.be.true;
-            expect((res.render as sinon.SinonSpy).calledWith('job-role-list')).to.be.true;
+            expect((res.render as sinon.SinonSpy).calledWith('job-role-list', { jobRoles: jobRoleList, orderBy: undefined, direction: undefined})).to.be.true;
         });
 
         it('should render view with error message when error thrown', async () => {
@@ -56,6 +56,19 @@ describe('JobRoleController', function () {
             expect((res.render as sinon.SinonSpy).calledWith('job-role-list')).to.be.true;
         
             expect(res.locals.errorMessage).to.equal(errorMessage);
+        });
+        it('should render view with Job Roles sorted by orderBy and direction', async () => {
+            const jobRoleList = [jobRoleResponse];
+
+            sinon.stub(JobRoleService, 'getJobRoles').resolves(jobRoleList);
+
+            const req = { session: { token: 'test-token' }, query: { orderBy: 'roleName', direction: 'asc' } };
+            const res = { render: sinon.spy(), locals: { errormessage: '' } };
+
+            await JobRoleController.getAllJobRoles(req as any, res as any);
+
+            expect(res.render.calledOnce).to.be.true;
+            expect(res.render.calledWith('jobRoles', { jobRoles: jobRoleList, orderBy: 'roleName', direction: 'asc' })).to.be.true;
         });
     })
 })
