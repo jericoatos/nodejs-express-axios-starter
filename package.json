@@ -4,7 +4,7 @@
     "dev": "nodemon src/app.ts",
     "lint": "eslint .",
     "linter": "npx eslint .",
-    "test": "mocha --loader ts-node/esm --extensions ts test/**/*.ts",
+    "test": "mocha --require ts-node/register test/unit/**/*.ts",
     "test-ui": "mocha --require ts-node/register --timeout 10000 test/ui/**/*.ts",
     "build": "tsc --build",
     "test-pa11y": "pa11y-ci --config Accessability/pa11y-config.json"
@@ -14,12 +14,14 @@
   "author": "Shaun Ganley <shaung@kainos.com>",
   "license": "ISC",
   "dependencies": {
+    "@types/mocha": "^10.0.7",
     "@types/node": "^22.5.1",
     "audit": "^0.0.6",
     "axios": "^1.7.5",
     "body-parser": "^1.20.2",
     "chai": "^4.3.7",
     "core-js": "^3.38.1",
+    "eslint": "^8.57.0",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "jsonwebtoken": "^9.0.2",
@@ -46,13 +48,13 @@
     "eslint": "^8.57.0",
     "mocha": "^10.7.3",
     "nodemon": "^3.1.0",
-    "pa11y": "^8.0.0",
-    "pa11y-ci": "^2.4.2",
     "sass": "^1.75.0",
     "selenium-webdriver": "^4.24.0",
     "sinon": "^18.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.2",
-    "typescript-eslint": "^7.6.0"
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^7.6.0",
+    "pa11y": "^8.0.0",
+    "pa11y-ci": "^2.4.2"
   }
 }
