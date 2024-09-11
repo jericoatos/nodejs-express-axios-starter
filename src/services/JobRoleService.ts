@@ -27,15 +27,18 @@ export const getJobRoleById = async (id: string, token: string): Promise<JobRole
         
         return response.data;
     } catch(e){
+        
         throw new Error('failed to get JobRole information');
     }
 }
 
 export const createJobRole = async(jobRole: JobRoleRequest): Promise<number> => {
+    
     validateJobRoleForm(jobRole);
+    
     try{
 
-        const response: AxiosResponse = await axios.post(URL, jobRole);
+        const response: AxiosResponse = await axios.post(URL, jobRole); //issue with validator?
 
         return response.data;
     }catch(e){
@@ -44,4 +47,6 @@ export const createJobRole = async(jobRole: JobRoleRequest): Promise<number> => 
         throw new Error(e.response.data);
     }
 }
+
+
 

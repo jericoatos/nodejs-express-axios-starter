@@ -15,6 +15,7 @@ export const validateJobRoleForm = function (jobRole: JobRoleRequest): void {
     }
     const roleNamePattern = /^[A-Za-z\s]+$/; 
     if (!roleNamePattern.test(jobRole.roleName)) {
+        console.log('Test1')
         throw new Error('Job Role name can only contain letters and spaces.');
     }
 
@@ -24,7 +25,7 @@ export const validateJobRoleForm = function (jobRole: JobRoleRequest): void {
     const descriptionPattern = /^[A-Za-z\s.,!?'""-]+$/; 
 
     if (!descriptionPattern.test(jobRole.description)) {
-    throw new Error('Job Spec Summary can only contain letters, spaces, full stops, commas, exclamation marks, question marks, and quotation marks.');
+        throw new Error('Job Spec Summary can only contain letters, spaces, full stops, commas, exclamation marks, question marks, and quotation marks.');
     } 
    
 
@@ -38,7 +39,7 @@ export const validateJobRoleForm = function (jobRole: JobRoleRequest): void {
     const responsibilitiesPattern = /^[A-Za-z\s.,!?'""-]+$/; 
 
     if (!responsibilitiesPattern.test(jobRole.responsibilities)) {
-    throw new Error('Responsibilities can only contain letters, spaces, full stops, commas, exclamation marks, question marks, and quotation marks.');
+        throw new Error('Responsibilities can only contain letters, spaces, full stops, commas, exclamation marks, question marks, and quotation marks.');
     }   
  
 

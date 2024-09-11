@@ -276,7 +276,7 @@ describe('JobRoleController', function () {
 
             expect((res.render as sinon.SinonSpy).calledOnce).to.be.true;
             expect((res.render as sinon.SinonSpy).calledWith('job-role-form.html', req.body)).to.be.true;
-            expect(res.locals.errorMessage).to.equal(errorMessages);
+            expect(res.locals.errormessage).to.equal(errorMessages);
         })
     })
 });
@@ -292,5 +292,5 @@ it('should handle empty request body in postJobRoleForm', async () => {
 
     expect((res.render as sinon.SinonSpy).calledOnce).to.be.true;
     expect((res.render as sinon.SinonSpy).calledWith('job-role-form.html', req.body)).to.be.true;
-    expect(res.locals.errorMessage).to.equal('Job Role Name is required.'); 
+    expect(res.locals.errormessage).to.equal('Job Role Name is required.'); 
 });

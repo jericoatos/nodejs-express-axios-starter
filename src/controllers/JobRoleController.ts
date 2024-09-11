@@ -40,8 +40,9 @@ export const postJobRoleForm = async(req: express.Request, res: express.Response
         const id = await createJobRole(req.body);
         res.redirect('/job-roles/'+ id); 
     }catch(error) {
-    
-       res.locals.errorMessage = error.message;
+        
+        console.log(error.message)
+       res.locals.errormessage = error.message;
        res.render('job-role-form.html', req.body);
         
     }
