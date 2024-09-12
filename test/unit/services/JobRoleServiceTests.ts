@@ -4,7 +4,8 @@ import { describe, it } from "node:test";
 import { expect } from "chai";
 import { JobRoleResponse } from "../../../src/models/JobRoleResponse";
 import { JobRole } from '../../../src/models/JobRole';
-import { getJobRoleById, getJobRoles, URL } from "../../../src/services/JobRoleService";
+import { createJobRole, getJobRoleById, getJobRoles, URL } from "../../../src/services/JobRoleService";
+import { JobRoleRequest } from '../../../src/models/JobRoleRequest';
 
 const mock = new MockAdapter(axios);
 
@@ -30,6 +31,19 @@ const jobRole: JobRole = {
   statusName: "Open",
   numberOfOpenPositions: 3
 };
+const jobRoleRequest: JobRoleRequest = {
+  roleName: "Software Engineer",
+  description: "Develops, tests, and maintains software applications.",
+  sharepointUrl: "https://sharepoint.com/job/software-engineer",
+  responsibilities: "Design, develop, and maintain software applications, collaborate with other engineers, perform code reviews.",
+  numberOfOpenPositions: 3,
+  location: "New York",
+  closingDate: new Date().toISOString(),
+  bandId: 1,
+  capabilityId: 1,
+  statusName: 'Open'
+};
+
 
 describe('JobRoleService', function () {
     const token = 'test-token';
@@ -78,6 +92,7 @@ describe('JobRoleService', function () {
         });
     });
 
+
     describe('getJobRoleById', function () {
         it('should return job role by id from response', async () => {
             const id = jobRole.jobRoleId;
@@ -119,4 +134,68 @@ describe('JobRoleService', function () {
             }
         });
     });
+
+
+    describe('createJobRole', function () {
+      it('should create a job role and return the job role ID', async () => {
+        
+          const responseId = 12; 
+          mock.onPost('http://localhost:8080/api/job-roles', jobRoleRequest).reply(200, responseId);
+
+          const result = await createJobRole(jobRoleRequest, token);
+
+          expect(result).to.equal(responseId);
+      });
+
+      it('should throw an error when validation fails', async () => {
+          const invalidJobRoleRequest: JobRoleRequest = {
+            roleName: "", //role name not entered
+            description: "Description",
+            sharepointUrl: "https://kainos.com",
+            responsibilities: "Testing, develping, designing and communicating with others",
+            numberOfOpenPositions: 5,
+            location: "Gdansk",
+            closingDate: new Date().toISOString(),
+            bandId: 1,
+            capabilityId: 1,
+            statusName: 'Open'
+          };
+
+          try {
+              await createJobRole(invalidJobRoleRequest, token);
+          } catch (e) {
+              expect(e.message).to.equal("Job Role Name is required."); 
+              return;
+          }
+
+          throw new Error("Expected validation error was not thrown.");
+      });
+      it('should throw an error when the API call fails with a 400 status', async () => {
+          
+
+        mock.onPost('http://localhost:8080/api/job-roles', jobRoleRequest).reply(400, "Bad request");
+
+        try {
+            await createJobRole(jobRoleRequest, token);
+        } catch (e) {
+            expect(e.message).to.equal('Bad request');
+            return;
+        }
+        throw new Error("Expected client error was not thrown.");
+    });
+  });
+
+      it('should throw an error when the API call fails with a 500 status', async () => {
+        
+          mock.onPost('http://localhost:8080/api/job-roles', jobRoleRequest).reply(500, "Server error");
+
+          try {
+              await createJobRole(jobRoleRequest, token);
+          } catch (e) {
+              expect(e.message).to.equal('Server error');
+              return;
+          }
+
+          throw new Error("Expected server error was not thrown.");
+      });
 });

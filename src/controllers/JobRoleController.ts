@@ -1,4 +1,5 @@
 import express from "express"; 
+import { createJobRole } from "../services/JobRoleService";
 import { getJobRoleById, getJobRoles } from "../services/JobRoleService";
 
 
@@ -33,3 +34,20 @@ export const getSingleJobRole = async (req: express.Request, res: express.Respon
 export const getErrorMessage = async (req: express.Request, res: express.Response): Promise<void> => {
     res.render('error');
 }
+
+export const getJobRoleForm = async (req:express.Request, res:express.Response): Promise<void> => {
+    res.render('job-role-form.html');
+}
+export const postJobRoleForm = async(req: express.Request, res: express.Response): Promise<void> => {
+    try{
+        const id = await createJobRole(req.body, req.session.token);
+        res.redirect('/job-roles/'+ id); 
+    }catch(error) {
+        
+        console.log(error.message)
+       res.locals.errormessage = error.message;
+       res.render('job-role-form.html', req.body);
+        
+    }
+}
+

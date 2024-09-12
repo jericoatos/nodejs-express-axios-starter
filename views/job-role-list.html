@@ -11,6 +11,11 @@
         {% include "kainosHeader.html" %}
 
         <main class="container mt-5" style="height: 80vh;">
+            <div class="mb-4"> <!-- button -->
+                {% if isAdmin %}
+                <a href="/job-role-form" class="btn btn-primary" id="add new role button">Add New Role</a>
+                {% endif %}
+            </div>
             <h1 class="mb-4">Job Roles</h1>
             <table class="table table-striped table-bordered" id="jobRoleListTable">
                 <thead>

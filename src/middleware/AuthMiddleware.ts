@@ -5,8 +5,16 @@ import "core-js/stable/atob";
 
 export const setLoggedInStatus = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     res.locals.loggedin = !!req.session.token;
+
+    if(req.session.token){
+        const decodedToken: JwtToken = jwtDecode(req.session.token);
+
+        res.locals.isAdmin = decodedToken.Role == UserRole.Admin;
+    } else{
+        res.locals.isAdmin = false; 
+    }
     next();
-}
+};
 
 export const allowRoles = (allowedRoles: UserRole[]) => {
     return (req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -16,7 +24,7 @@ export const allowRoles = (allowedRoles: UserRole[]) => {
 
         const decodedToken: JwtToken = jwtDecode(req.session.token);
         if (!allowedRoles.includes(decodedToken.Role)) {
-            return res.status(403).send('User role not authorised for this action');
+            return res.status(403).redirect('/nonAuthorizedError');
         }
 
         next();
