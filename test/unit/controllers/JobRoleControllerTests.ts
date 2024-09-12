@@ -48,56 +48,6 @@ const jobRolerequest: JobRoleRequest = {
 
   
 
-    afterEach(() => {
-        sinon.restore();  // Restore original functionality after each test
-    });
-
-
-describe('JobRoleController', function () {
-    afterEach(() => {
-        sinon.restore();
-    });
-
-    describe('getAllJobRoles', function () {
-        it('should render view when job roles returned', async () => {
-            const jobRoleList = [jobRoleResponse];
-
-            sinon.stub(JobRoleService, 'getJobRoles').resolves(jobRoleList);
-            const req: Partial<Request> = {}; 
-            const res = {
-                render: sinon.spy(), 
-                locals: { errorMessage: '' }, 
-            } as unknown as Response;
-
-
-            await JobRoleController.getAllJobRoles(req as Request, res as Response);
-
-            expect((res.render as sinon.SinonSpy).calledOnce).to.be.true;
-            expect((res.render as sinon.SinonSpy).calledWith('job-role-list')).to.be.true;
-        });
-
-        it('should render view with error message when error thrown', async () => {
-            const errorMessage: string = "Error message";
-            sinon.stub(JobRoleService, 'getJobRoles').rejects(new Error(errorMessage));
-        
-            const req = { params: { id: '1' }, session: { token: 'test-token' } };
-            const res = {
-                render: sinon.spy(), 
-                locals: { errorMessage: '' }, 
-            } as unknown as Response;
-        
-            await JobRoleController.getAllJobRoles(req as unknown as Request, res as Response);
-        
-            expect((res.render as sinon.SinonSpy).calledOnce).to.be.true;
-        
-            expect((res.render as sinon.SinonSpy).calledWith('job-role-list')).to.be.true;
-        
-            expect(res.locals.errorMessage).to.equal(errorMessage);
-        });
-    })
-})
-
-
 describe('JobRoleController', function () {
     afterEach(() => {
         sinon.restore();
