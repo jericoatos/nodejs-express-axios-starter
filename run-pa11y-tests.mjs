@@ -1,6 +1,5 @@
 import pa11y from 'pa11y';
 
-// Define the URLs you want to test
 const urls = [
     "https://jd5pri3k2r.eu-west-1.awsapprunner.com/",
     "https://jd5pri3k2r.eu-west-1.awsapprunner.com/job-roles",

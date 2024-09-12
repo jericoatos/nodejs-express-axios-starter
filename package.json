@@ -7,7 +7,7 @@
     "test": "mocha --require ts-node/register test/unit/**/*.ts",
     "test-ui": "mocha --require ts-node/register --timeout 10000 test/ui/**/*.ts",
     "build": "tsc --build",
-    "test-pa11y": "pa11y-ci --config Accessability/pa11y-config.json"
+    "pa11y": "pa11y-ci --config Accessability/pa11y-config.json > report.csv"
   },
   "keywords": [],
   "author": "Shaun Ganley <shaung@kainos.com>",

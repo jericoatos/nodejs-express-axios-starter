@@ -25,4 +25,4 @@ jobs:
         run: npm install
 
       - name: Run Pa11y tests
-        run: node ../nodejs-express-axios-starter/run-pa11y-tests.mjs
+        run: npm run pa11y
