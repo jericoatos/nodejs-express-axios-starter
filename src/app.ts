@@ -9,6 +9,7 @@ import { dateFilter } from "./filter/DateFilter";
 import { getloginErrorMessage, getLoginForm, getNonAuthorizedMessage, logout, postLoginForm } from "./controllers/AuthController";
 import { allowRoles, setLoggedInStatus } from "./middleware/AuthMiddleware";
 import { UserRole } from "./models/JwtToken";
+import { getAnswers, getQuestionFive, getQuestionFour, getQuestionOne, getQuestionThree, getQuestionTwo, getQuiz, getResultJob } from "./controllers/QuizController";
 
 const app = express();
 
