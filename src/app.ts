@@ -4,9 +4,9 @@ import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import path from 'path';
 
-import { getAllJobRoles, getErrorMessage, getSingleJobRole } from "./controllers/JobRoleController";
+import { getAllJobRoles, getErrorMessage, getJobRoleForm, getSingleJobRole, postJobRoleForm } from "./controllers/JobRoleController";
 import { dateFilter } from "./filter/DateFilter";
-import { getloginErrorMessage, getLoginForm, logout, postLoginForm } from "./controllers/AuthController";
+import { getloginErrorMessage, getLoginForm, getNonAuthorizedMessage, logout, postLoginForm } from "./controllers/AuthController";
 import { allowRoles, setLoggedInStatus } from "./middleware/AuthMiddleware";
 import { UserRole } from "./models/JwtToken";
 
@@ -63,6 +63,7 @@ app.post('/loginForm', postLoginForm);
 
 app.get('/logout', logout)
 app.get('/loginErrorMessage', getloginErrorMessage )
+app.get('/nonAuthorizedError', getNonAuthorizedMessage)
 
 app.get('/', async (req: express.Request, res: express.Response) => {
   res.render("home.html");
@@ -70,6 +71,22 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 
 app.get('/job-roles', allowRoles([UserRole.Admin, UserRole.User]), getAllJobRoles);
 
-app.get('/job-roles/:id', allowRoles([UserRole.Admin, UserRole.User]), getSingleJobRole);
+app.get('/', async (req: express.Request, res: express.Response) => {
+  res.render("home.html");
+});
 
+
+app.get('/job-roles', getAllJobRoles);
+app.get('/job-role-form',allowRoles([UserRole.Admin]), getJobRoleForm);
+app.post('/job-role-form',allowRoles([UserRole.Admin]), postJobRoleForm);
+app.get('/job-roles/:id', allowRoles([UserRole.Admin, UserRole.User]), getSingleJobRole);
 app.get('/error', getErrorMessage);
+
+app.get('/questionOne', getQuestionOne);
+app.get('/questionTwo', getQuestionTwo);
+app.get('/questionThree', getQuestionThree);
+app.get('/questionFour', getQuestionFour);
+app.get('/questionFive', getQuestionFive);
+app.get('/resultJob', getResultJob);
+app.get('/checkAnswers', getAnswers);
+app.get('/quiz', getQuiz);

@@ -150,7 +150,7 @@ button:hover {
 
 /* Styling the submit button */
 button[type="submit"] {
-    background-color: #007bff;
+    background-color: #0062ff;
     color: white;
     font-weight: 600;
     padding: 10px 20px;
