@@ -40,7 +40,6 @@ describe('JobRoleController', function () {
     
     describe('getAllJobRoles', function () {
 
-        // Restore stubs after each test
         afterEach(() => {
             sinon.restore();
         });
@@ -61,18 +60,18 @@ describe('JobRoleController', function () {
         };
 
         const res = {
-            render: sinon.spy() as SinonSpy, // Cast render as SinonSpy
+            render: sinon.spy() as SinonSpy, 
             locals: { errorMessage: '' },
         } as unknown as Response;
 
         await JobRoleController.getAllJobRoles(req as Request, res as Response);
 
-        expect((res.render as SinonSpy).calledOnce).to.be.true; // No TypeScript error
+        expect((res.render as SinonSpy).calledOnce).to.be.true; 
         expect((res.render as SinonSpy).calledWith('job-role-list', {
             jobRoles: jobRoleList,
             orderBy: 'name',
             direction: 'asc',
-        })).to.be.true; // No TypeScript error
+        })).to.be.true; 
     });
 
     it('should render view with error message when error thrown', async () => {
@@ -91,18 +90,18 @@ describe('JobRoleController', function () {
         };
 
         const res = {
-            render: sinon.spy() as SinonSpy, // Cast render as SinonSpy
+            render: sinon.spy() as SinonSpy, 
             locals: { errorMessage: 'Error message' },
         } as unknown as Response;
 
         await JobRoleController.getAllJobRoles(req as Request, res as Response);
 
-        expect((res.render as SinonSpy).calledOnce).to.be.true; // No TypeScript error
+        expect((res.render as SinonSpy).calledOnce).to.be.true;
         expect((res.render as SinonSpy).calledWith('job-role-list', {
             jobRoles: [],
             orderBy: 'name',
             direction: 'asc',
-        })).to.be.true; // No TypeScript error
+        })).to.be.true;
 
         expect(res.locals.errorMessage).to.equal(errorMessage);
     });
@@ -140,10 +139,8 @@ describe('JobRoleController', function () {
         
             describe('getSingleJobRole', function () {
                 it('should return 404 and redirect to error page when job role is not found', async () => {
-                    // Stub the service call to return null
                     sinon.stub(JobRoleService, 'getJobRoleById').resolves(null);
                 
-                    // Mock request and response objects
                     const req = {
                         params: { id: "999" },
                         session: { token: 'test-token' }
@@ -172,11 +169,9 @@ describe('JobRoleController', function () {
                 });
         
                 it('should return 500 and redirect to error page when an error occurs', async () => {
-                    // Stub the service call to throw an error
                     const errorMessage = "Error retrieving job role";
                     sinon.stub(JobRoleService, 'getJobRoleById').rejects(new Error(errorMessage));
                 
-                    // Mock request and response objects
                     const req = {
                         params: { id: "2" },
                         session: { token: 'test-token' }

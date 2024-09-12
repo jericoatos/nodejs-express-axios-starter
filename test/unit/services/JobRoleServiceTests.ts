@@ -14,7 +14,7 @@ const jobRoleResponse: JobRoleResponse = {
     location: "Belfast",
     capabilityName: "SoftDev",
     bandName: "Senior",
-    closingDate: new Date(1693078000000) // Ensure this is a valid date
+    closingDate: new Date(1693078000000) 
 };
 
 const jobRole: JobRole = {
